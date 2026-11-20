@@ -1,0 +1,26 @@
+[package]
+name = "enmaster"
+version = "0.1.0"
+edition = "2024"
+description = "Practise English writing on any selected text in GNOME, using your ChatGPT plan"
+license = "GPL-3.0-or-later"
+repository = "https://github.com/tecix/eng-master"
+
+[dependencies]
+adw = { version = "0.9.2", package = "libadwaita", features = ["v1_9", "gtk_v4_20"] }
+anyhow = "1.0.104"
+async-channel = "2.5.0"
+base64 = "0.23.1"
+chrono = { version = "0.4.45", features = ["serde"] }
+dirs = "7.0.0"
+gtk = { version = "0.11.5", package = "gtk4", features = ["v4_20"] }
+oo7 = "0.7.2"
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = "1.0.154"
+sha2 = "0.11.1"
+similar = "3.2.1"
+tokio = { version = "1.54.1", features = ["rt", "net", "time"] }
+toml = "1.2.1"
+ureq = { version = "3.5.2", features = ["json"] }
+url = "2.5.8"
+uuid = { version = "1.29.3", features = ["v4"] }
