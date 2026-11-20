@@ -17,16 +17,6 @@ pub enum Source {
     Empty,
 }
 
-impl Source {
-    pub fn describe(self) -> &'static str {
-        match self {
-            Source::Selection => "From your selection",
-            Source::Clipboard => "From the clipboard",
-            Source::Empty => "Type or paste your text",
-        }
-    }
-}
-
 const READ_TIMEOUT: Duration = Duration::from_millis(1500);
 const MAX_BYTES: usize = 256 * 1024;
 

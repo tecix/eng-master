@@ -11,11 +11,7 @@ fn attributes() -> HashMap<&'static str, &'static str> {
 }
 
 fn block_on<F: Future>(future: F) -> F::Output {
-    tokio::runtime::Builder::new_current_thread()
-        .enable_all()
-        .build()
-        .expect("tokio runtime")
-        .block_on(future)
+    tokio::runtime::Builder::new_current_thread().enable_all().build().expect("tokio runtime").block_on(future)
 }
 
 fn legacy_attributes() -> HashMap<&'static str, &'static str> {

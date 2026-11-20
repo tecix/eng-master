@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:foaf="http://xmlns.com/foaf/0.1/"
+         xmlns:gnome="http://api.gnome.org/doap-extensions#"
+         xmlns="http://usefulinc.com/ns/doap#">
+  <name xml:lang="en">en-Master</name>
+  <shortdesc xml:lang="en">Practise English writing on the text you write</shortdesc>
+  <homepage rdf:resource="https://github.com/tecix/eng-master"/>
+  <bug-database rdf:resource="https://github.com/tecix/eng-master/issues"/>
+  <license rdf:resource="https://spdx.org/licenses/GPL-3.0-or-later.html"/>
+  <programming-language>Rust</programming-language>
+  <platform>GTK 4</platform>
+  <platform>Libadwaita</platform>
+  <maintainer>
+    <foaf:Person>
+      <foaf:name>Tecix</foaf:name>
+      <foaf:account>
+        <foaf:OnlineAccount>
+          <foaf:accountServiceHomepage rdf:resource="https://github.com"/>
+          <foaf:accountName>tecix</foaf:accountName>
+        </foaf:OnlineAccount>
+      </foaf:account>
+    </foaf:Person>
+  </maintainer>
+</Project>

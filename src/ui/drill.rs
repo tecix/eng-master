@@ -2,6 +2,7 @@
 //! Enter checks and moves on, Alt+R accepts your answer after a miss, Esc closes.
 
 use super::{correction_markup, esc, win_action, with_keys};
+use crate::i18n::{tr, trf};
 use crate::srs::{Card, Deck};
 use crate::{actions, config, learn, srs};
 use adw::prelude::*;
@@ -35,9 +36,11 @@ pub fn open(app: &adw::Application) {
     view.add_top_bar(&adw::HeaderBar::new());
     let win = adw::ApplicationWindow::builder()
         .application(app)
-        .title("Daily drill")
+        .title(tr("Daily Drill"))
         .default_width(640)
         .default_height(540)
+        .width_request(360)
+        .height_request(294)
         .content(&view)
         .build();
     win.set_widget_name(WINDOW_NAME);
@@ -56,13 +59,14 @@ pub fn open(app: &adw::Application) {
     });
     if drill.total == 0 {
         drill.end_page(
-            "Nothing to review today",
-            "Keep writing with the coach — the mistakes it finds become drill cards.",
+            "media-playlist-repeat-symbolic",
+            &tr("Nothing to Review Today"),
+            &tr("Keep writing with the coach. The mistakes it finds become drill cards."),
         );
     } else {
         drill.next();
     }
-    drill.win.present();
+    super::present(&drill.win);
     super::maybe_snapshot(&drill.win);
 }
 
@@ -92,8 +96,12 @@ impl Drill {
         let Some(card) = self.queue.borrow_mut().pop_front() else {
             let right = self.right_first_time.get();
             self.end_page(
-                "Drill done",
-                &format!("{right} of {} right on the first try. Cards you missed come back tomorrow.", self.total),
+                "object-select-symbolic",
+                &tr("Drill Done"),
+                &trf(
+                    "{} of {} right on the first try. Cards you missed come back tomorrow.",
+                    &[&right.to_string(), &self.total.to_string()],
+                ),
             );
             return;
         };
@@ -109,19 +117,24 @@ impl Drill {
         let progress = gtk::ProgressBar::builder().fraction((position - 1) as f64 / self.total as f64).build();
         column.append(&progress);
         column.append(&label(
-            &format!("Card {position} of {} · {}", self.total, actions::category_label(&card.mistake.category)),
+            &format!(
+                "{} · {}",
+                trf("Card {} of {}", &[&position.to_string(), &self.total.to_string()]),
+                actions::category_label(&card.mistake.category)
+            ),
             &["dim-label", "caption"],
         ));
         let prompt = label("", &["title-3"]);
         prompt.set_markup(&prompt_markup(&card));
         prompt.set_selectable(true);
         column.append(&prompt);
-        column.append(&label("Type the underlined part correctly — or the whole sentence.", &["dim-label"]));
-        let entry = gtk::Entry::builder().placeholder_text("Your correction").build();
+        column.append(&label(&tr("Type the underlined part correctly, or the whole sentence."), &["dim-label"]));
+        let entry = gtk::Entry::builder().placeholder_text(tr("Your correction")).build();
+        entry.update_property(&[gtk::accessible::Property::Label(&tr("Your correction"))]);
         column.append(&entry);
         let keys = gtk::Box::builder().spacing(18).build();
-        keys.append(&super::hint("Return", "check"));
-        keys.append(&super::hint("Escape", "close"));
+        keys.append(&super::hint("Return", &tr("check")));
+        keys.append(&super::hint("Escape", &tr("close")));
         column.append(&keys);
         let feedback = gtk::Box::builder().orientation(gtk::Orientation::Vertical).spacing(8).visible(false).build();
         column.append(&feedback);
@@ -145,8 +158,14 @@ impl Drill {
     }
 
     fn show_feedback(self: &Rc<Self>, feedback: &gtk::Box, card: Rc<Card>, correct: bool) {
-        let verdict = if correct { "✓ Correct" } else { "✗ Not quite" };
-        feedback.append(&label(verdict, &[if correct { "success" } else { "error" }, "heading"]));
+        let verdict = gtk::Box::builder().spacing(8).css_classes([if correct { "success" } else { "error" }]).build();
+        verdict.append(&gtk::Image::from_icon_name(if correct {
+            "object-select-symbolic"
+        } else {
+            "window-close-symbolic"
+        }));
+        verdict.append(&label(&if correct { tr("Correct") } else { tr("Not quite") }, &["heading"]));
+        feedback.append(&verdict);
         let fix = label("", &[]);
         fix.set_markup(&correction_markup(&card.mistake.original, &card.mistake.fix));
         fix.set_selectable(true);
@@ -160,14 +179,14 @@ impl Drill {
         let buttons = gtk::Box::builder().spacing(8).halign(gtk::Align::End).margin_top(6).build();
         if !correct {
             // Alt+R through the mnemonic.
-            let accept = gtk::Button::builder().child(&with_keys("I was _right", "<Alt>r")).build();
+            let accept = gtk::Button::builder().child(&with_keys(&tr("I Was _Right"), "<Alt>r").0).build();
             let this = self.clone();
             let card2 = card.clone();
             accept.connect_clicked(move |_| this.grade(&card2, true));
             buttons.append(&accept);
         }
         let next = gtk::Button::builder()
-            .child(&with_keys("Next", "Return"))
+            .child(&with_keys(&tr("_Next"), "Return").0)
             .css_classes(["suggested-action"])
             .build();
         let this = self.clone();
@@ -199,22 +218,18 @@ impl Drill {
         self.next();
     }
 
-    fn end_page(&self, title: &str, description: &str) {
-        let page = adw::StatusPage::builder()
-            .icon_name("emblem-ok-symbolic")
-            .title(title)
-            .description(description)
-            .build();
+    fn end_page(&self, icon: &str, title: &str, description: &str) {
+        let page = adw::StatusPage::builder().icon_name(icon).title(title).description(description).build();
         let buttons = gtk::Box::builder().spacing(12).halign(gtk::Align::Center).build();
         buttons.append(
             &gtk::Button::builder()
-                .child(&with_keys("Progress", "<Control>p"))
+                .child(&with_keys(&tr("_Progress"), "<Control>p").0)
                 .action_name("app.progress")
                 .css_classes(["pill"])
                 .build(),
         );
         let close = gtk::Button::builder()
-            .child(&with_keys("Close", "Escape"))
+            .child(&with_keys(&tr("_Close"), "Escape").0)
             .action_name("window.close")
             .css_classes(["pill", "suggested-action"])
             .build();

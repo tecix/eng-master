@@ -1,64 +1,47 @@
-//! GTK4/libadwaita front end. One resident instance: the keyboard shortcut starts it the first
+//! GTK4/libadwaita front end. One resident instance: a keyboard shortcut starts it the first
 //! time and later presses reach it over D-Bus, so windows open fast and the clipboard stays
 //! owned after a window closes. Everything can be driven from the keyboard (F1 lists it all).
 
+mod background;
 mod coach;
 mod drill;
+mod preferences;
 mod progress;
 
+use crate::i18n::tr;
 use crate::{config, paths};
 use adw::prelude::*;
 use gtk::{gdk, gio, glib};
+use std::cell::RefCell;
 
-const CSS: &str = "
-flowbox.actions > flowboxchild.action-chip {
-  padding: 7px 12px;
-  border-radius: 999px;
-  background-color: color-mix(in srgb, currentColor 8%, transparent);
+thread_local! {
+    /// xdg-activation token from a portal shortcut, used by the next window that opens.
+    static ACTIVATION_TOKEN: RefCell<Option<String>> = const { RefCell::new(None) };
 }
-flowbox.actions > flowboxchild.action-chip:hover {
-  background-color: color-mix(in srgb, currentColor 14%, transparent);
-}
-flowbox.actions > flowboxchild.action-chip.primary {
-  background-color: var(--accent-bg-color);
-  color: var(--accent-fg-color);
-}
-flowbox.actions > flowboxchild.action-chip:focus-visible {
-  outline: 2px solid var(--accent-color);
-  outline-offset: 1px;
-}
-.hints { font-size: 0.9em; }
-.keycap {
-  font-size: 0.8em;
-  font-weight: 600;
-  padding: 1px 6px;
-  border-radius: 5px;
-  border: 1px solid color-mix(in srgb, currentColor 25%, transparent);
-  box-shadow: inset 0 -1px color-mix(in srgb, currentColor 20%, transparent);
-}
-.action-chip .keycap { opacity: 0.7; }
-.suggested-action .keycap { border-color: color-mix(in srgb, currentColor 45%, transparent); }
-.source-chip {
-  font-size: 0.85em;
-  padding: 1px 8px;
-  border-radius: 999px;
-  background-color: color-mix(in srgb, currentColor 8%, transparent);
-}
-";
 
 pub fn run(args: Vec<String>) -> std::process::ExitCode {
+    gio::resources_register_include!("enmaster.gresource").expect("bundled resources");
     let app = adw::Application::builder()
         .application_id(paths::APP_ID)
+        .resource_base_path(paths::RESOURCE_PATH)
         .flags(gio::ApplicationFlags::HANDLES_COMMAND_LINE)
         .build();
     app.connect_startup(|app| {
         std::mem::forget(app.hold());
-        load_css();
+        gtk::Window::set_default_icon_name(paths::APP_ID);
+        if let Some(display) = gdk::Display::default() {
+            gtk::IconTheme::for_display(&display).add_resource_path(&format!("{}/icons", paths::RESOURCE_PATH));
+            let provider = gtk::CssProvider::new();
+            provider.load_from_resource(&format!("{}/style.css", paths::RESOURCE_PATH));
+            gtk::style_context_add_provider_for_display(&display, &provider, gtk::STYLE_PROVIDER_PRIORITY_APPLICATION);
+        }
         install_app_actions(app);
+        background::start(app);
     });
+    // Launched from the app grid (D-Bus activation).
+    app.connect_activate(|app| coach::open(app, None));
     app.connect_command_line(|app, cmdline| {
-        let args: Vec<String> =
-            cmdline.arguments().iter().skip(1).map(|a| a.to_string_lossy().into_owned()).collect();
+        let args: Vec<String> = cmdline.arguments().iter().skip(1).map(|a| a.to_string_lossy().into_owned()).collect();
         handle(app, &args);
         glib::ExitCode::SUCCESS
     });
@@ -69,6 +52,7 @@ pub fn run(args: Vec<String>) -> std::process::ExitCode {
 fn handle(app: &adw::Application, args: &[String]) {
     match args.first().map(String::as_str) {
         Some("quit") => app.quit(),
+        Some("--background") => {}
         Some("drill") => drill::open(app),
         Some("progress") => progress::open(app),
         Some("--action") => coach::open(app, args.get(1).cloned()),
@@ -77,12 +61,25 @@ fn handle(app: &adw::Application, args: &[String]) {
     }
 }
 
-fn load_css() {
-    let provider = gtk::CssProvider::new();
-    provider.load_from_string(CSS);
-    if let Some(display) = gdk::Display::default() {
-        gtk::style_context_add_provider_for_display(&display, &provider, gtk::STYLE_PROVIDER_PRIORITY_APPLICATION);
+/// Remember the activation token of a portal shortcut for the window it opens.
+pub fn set_activation_token(token: Option<String>) {
+    ACTIVATION_TOKEN.with(|slot| *slot.borrow_mut() = token);
+}
+
+/// Present a new window, using a pending activation token so it gets focus.
+pub fn present(win: &impl IsA<gtk::Window>) {
+    // Debug builds: ENMASTER_SNAPSHOT_SIZE=360x640 to check narrow layouts.
+    #[cfg(debug_assertions)]
+    if let Some((w, h)) = std::env::var("ENMASTER_SNAPSHOT_SIZE").ok().and_then(|s| {
+        let (w, h) = s.split_once('x')?;
+        Some((w.parse().ok()?, h.parse().ok()?))
+    }) {
+        win.set_default_size(w, h);
     }
+    if let Some(token) = ACTIVATION_TOKEN.with(|slot| slot.borrow_mut().take()) {
+        win.set_startup_id(&token);
+    }
+    win.present();
 }
 
 fn install_app_actions(app: &adw::Application) {
@@ -95,11 +92,13 @@ fn install_app_actions(app: &adw::Application) {
     };
     add("progress", &["<Control>p"], progress::open);
     add("drill", &["<Control>t"], drill::open);
-    add("settings", &["<Control>comma"], |_| {
+    add("preferences", &["<Control>comma"], preferences::open);
+    add("edit-actions", &[], |_| {
         let _ = config::load(); // creates the commented template on first use
         open_uri(&gio::File::for_path(config::config_path()).uri());
     });
     add("shortcuts", &["<Control>question", "F1"], show_shortcuts);
+    add("about", &[], show_about);
     add("quit", &["<Control>q"], |app| app.quit());
 
     // Window actions; each window defines the ones it supports.
@@ -122,65 +121,88 @@ fn install_app_actions(app: &adw::Application) {
     }
 }
 
+fn parent_window(app: &adw::Application) -> Option<gtk::Window> {
+    app.active_window().or_else(|| app.windows().into_iter().next())
+}
+
+fn show_about(app: &adw::Application) {
+    let about = adw::AboutDialog::builder()
+        .application_name(paths::APP_NAME)
+        .application_icon(paths::APP_ID)
+        .developer_name("Tecix")
+        .developers(["Tecix https://github.com/tecix"])
+        .version(paths::VERSION)
+        .website(paths::WEBSITE)
+        .issue_url(paths::ISSUES)
+        .license_type(gtk::License::Gpl30)
+        .copyright("© 2026 Tecix")
+        .comments(tr("Practise English writing on the text you write"))
+        // Translators: put your name and email here, one translator per line.
+        .translator_credits(tr("translator-credits"))
+        .release_notes("<p>First release.</p>")
+        .build();
+    about.add_acknowledgement_section(Some(&tr("Inspired by")), &["Plyph https://github.com/ubaimutl/Plyph"]);
+    about.present(parent_window(app).as_ref());
+}
+
 fn show_shortcuts(app: &adw::Application) {
     let dialog = adw::ShortcutsDialog::new();
-    let section = |title: &str, items: &[(&str, &str)]| {
-        let section = adw::ShortcutsSection::new(Some(title));
+    let section = |title: String, items: &[(String, &str)]| {
+        let section = adw::ShortcutsSection::new(Some(&title));
         for (label, accel) in items {
             section.add(adw::ShortcutsItem::new(label, accel));
         }
         dialog.add(section);
     };
     section(
-        "Anywhere in GNOME",
+        tr("Anywhere in GNOME"),
         &[
-            ("Coach the selected text", "<Super><Alt>c"),
-            ("Open en-Master on the selected text", "<Super><Alt>e"),
-            ("Daily drill", "<Super><Alt>d"),
+            (tr("Coach the selected text"), "<Super><Alt>c"),
+            (tr("Open en-Master on the selected text"), "<Super><Alt>e"),
+            (tr("Daily drill"), "<Super><Alt>d"),
         ],
     );
     section(
-        "Writing",
+        tr("Writing"),
         &[
-            ("Run action 1 to 9", "<Alt>1...<Alt>9"),
-            ("Pick an action with the arrow keys", "<Control>k"),
-            ("Run Coach, or Replace once there is a result", "<Control>Return"),
-            ("Run the last action again", "<Control>r"),
-            ("Edit your text", "<Control>e"),
-            ("Switch Result / Changes", "<Control>d"),
-            ("Copy the result", "<Control><Shift>c"),
-            ("Cancel the request, or close", "Escape"),
+            (tr("Run action 1 to 9"), "<Alt>1...<Alt>9"),
+            (tr("Pick an action with the arrow keys"), "<Control>k"),
+            (tr("Run Coach, or replace once there is a result"), "<Control>Return"),
+            (tr("Run the last action again"), "<Control>r"),
+            (tr("Edit your text"), "<Control>e"),
+            (tr("Switch between result and changes"), "<Control>d"),
+            (tr("Copy the result"), "<Control><Shift>c"),
+            (tr("Cancel the request, or close"), "Escape"),
         ],
     );
     section(
-        "Practice",
+        tr("Practice"),
         &[
-            ("Check the answer / next card", "Return"),
-            ("I was right (after a miss)", "<Alt>r"),
-            ("Progress", "<Control>p"),
-            ("Progress: last 7 / 30 / 90 days", "<Alt>1...<Alt>3"),
-            ("Progress: export for Anki", "<Control>s"),
-            ("Daily drill", "<Control>t"),
+            (tr("Check the answer, or go to the next card"), "Return"),
+            (tr("I was right (after a miss)"), "<Alt>r"),
+            (tr("Progress"), "<Control>p"),
+            (tr("Progress: last 7, 30 or 90 days"), "<Alt>1...<Alt>3"),
+            (tr("Progress: export for Anki"), "<Control>s"),
+            (tr("Daily drill"), "<Control>t"),
         ],
     );
     section(
-        "General",
+        tr("General"),
         &[
-            ("Keyboard shortcuts", "<Control>question F1"),
-            ("Settings file", "<Control>comma"),
-            ("Close window", "<Control>w"),
-            ("Quit en-Master", "<Control>q"),
+            (tr("Keyboard shortcuts"), "<Control>question F1"),
+            (tr("Preferences"), "<Control>comma"),
+            (tr("Close window"), "<Control>w"),
+            (tr("Quit en-Master"), "<Control>q"),
         ],
     );
-    let parent = app.active_window().or_else(|| app.windows().into_iter().next());
-    dialog.present(parent.as_ref());
+    dialog.present(parent_window(app).as_ref());
 }
 
 /// Bring an already open window of this kind to the front instead of opening another.
 pub fn present_existing(app: &adw::Application, name: &str) -> bool {
     match app.windows().into_iter().find(|w| w.widget_name() == name) {
         Some(window) => {
-            window.present();
+            present(&window);
             true
         }
         None => false,
@@ -207,7 +229,9 @@ pub fn key_text(accel: &str) -> String {
             rest = after;
         }
         let mut parts: Vec<String> = Vec::new();
-        for (name, label) in [("control", "Ctrl"), ("primary", "Ctrl"), ("alt", "Alt"), ("shift", "Shift"), ("super", "Super")] {
+        for (name, label) in
+            [("control", "Ctrl"), ("primary", "Ctrl"), ("alt", "Alt"), ("shift", "Shift"), ("super", "Super")]
+        {
             if mods.iter().any(|m| m == name) && !parts.iter().any(|p| p == label) {
                 parts.push(label.to_string());
             }
@@ -232,17 +256,18 @@ pub fn key_text(accel: &str) -> String {
         .join(" / ")
 }
 
-/// One keycap showing a whole shortcut.
+/// One keycap showing a whole shortcut. Screen readers get the shortcut as text.
 pub fn keycap(accel: &str) -> gtk::Label {
     gtk::Label::builder().label(key_text(accel)).valign(gtk::Align::Center).css_classes(["keycap"]).build()
 }
 
-/// Label plus its keyboard shortcut, for buttons.
-pub fn with_keys(label: &str, accel: &str) -> gtk::Box {
+/// Label plus its keyboard shortcut, for buttons. Returns the keycap so narrow layouts can hide it.
+pub fn with_keys(label: &str, accel: &str) -> (gtk::Box, gtk::Label) {
     let row = gtk::Box::builder().spacing(8).build();
     row.append(&gtk::Label::builder().label(label).use_underline(true).build());
-    row.append(&keycap(accel));
-    row
+    let key = keycap(accel);
+    row.append(&key);
+    (row, key)
 }
 
 /// One dim `key description` hint.
@@ -269,11 +294,15 @@ pub fn hints(items: &[(&str, &str)]) -> (gtk::FlowBox, Vec<gtk::Label>) {
         item.append(&keycap(accel));
         let label = gtk::Label::new(Some(text));
         item.append(&label);
-        let child = gtk::FlowBoxChild::builder().child(&item).focusable(false).build();
-        flow.append(&child);
+        flow.append(&gtk::FlowBoxChild::builder().child(&item).focusable(false).build());
         labels.push(label);
     }
     (flow, labels)
+}
+
+/// A dim symbolic icon for the start of a list row.
+pub fn row_icon(name: &str) -> gtk::Image {
+    gtk::Image::builder().icon_name(name).css_classes(["dim-label"]).build()
 }
 
 pub fn open_uri(uri: &str) {
@@ -284,13 +313,16 @@ pub fn esc(text: &str) -> String {
     glib::markup_escape_text(text).to_string()
 }
 
-pub const RED: &str = "#e01b24";
-pub const GREEN: &str = "#26a269";
+/// Error and success colours from the GNOME palette, readable on light and dark backgrounds.
+pub fn palette() -> (&'static str, &'static str) {
+    if adw::StyleManager::default().is_dark() { ("#ff7b63", "#8ff0a4") } else { ("#c01c28", "#1b8553") }
+}
 
 /// `original → fix` with the original struck through.
 pub fn correction_markup(original: &str, fix: &str) -> String {
+    let (red, green) = palette();
     format!(
-        "<span strikethrough=\"true\" foreground=\"{RED}\">{}</span>  →  <span foreground=\"{GREEN}\" weight=\"bold\">{}</span>",
+        "<span strikethrough=\"true\" foreground=\"{red}\">{}</span>  →  <span foreground=\"{green}\" weight=\"bold\">{}</span>",
         esc(original),
         esc(fix)
     )
@@ -298,7 +330,7 @@ pub fn correction_markup(original: &str, fix: &str) -> String {
 
 /// Debug builds only: with `ENMASTER_SNAPSHOT=file.png`, render the window to a PNG and quit.
 /// `ENMASTER_SNAPSHOT_ACTION=app.shortcuts` (etc.) runs an action first. Used to check layouts
-/// headlessly with the Broadway backend.
+/// and take the store screenshots in a headless GNOME Shell.
 #[cfg(debug_assertions)]
 pub fn maybe_snapshot(win: &impl IsA<gtk::Window>) {
     let Some(path) = std::env::var_os("ENMASTER_SNAPSHOT") else { return };
@@ -312,24 +344,9 @@ pub fn maybe_snapshot(win: &impl IsA<gtk::Window>) {
             let _ = WidgetExt::activate_action(&win, &name, None);
         }
         glib::timeout_add_local_once(std::time::Duration::from_millis(800), move || {
-            // An open dialog (e.g. keyboard shortcuts) is captured on its own.
-            fn find_dialog(w: &gtk::Widget) -> Option<gtk::Widget> {
-                let mut child = w.first_child();
-                while let Some(c) = child {
-                    if c.is::<adw::Dialog>() {
-                        return Some(c);
-                    }
-                    if let Some(found) = find_dialog(&c) {
-                        return Some(found);
-                    }
-                    child = c.next_sibling();
-                }
-                None
-            }
-            let target = find_dialog(win.upcast_ref()).unwrap_or_else(|| win.clone().upcast());
             if let Some(renderer) = win.renderer() {
                 let snapshot = gtk::Snapshot::new();
-                gtk::WidgetPaintable::new(Some(&target)).snapshot(&snapshot, target.width() as f64, target.height() as f64);
+                gtk::WidgetPaintable::new(Some(&win)).snapshot(&snapshot, win.width() as f64, win.height() as f64);
                 if let Some(node) = snapshot.to_node()
                     && let Err(e) = renderer.render_texture(&node, None).save_to_png(&path)
                 {

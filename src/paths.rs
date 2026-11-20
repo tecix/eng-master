@@ -6,8 +6,29 @@ use std::io::Write;
 use std::os::unix::fs::{OpenOptionsExt, PermissionsExt};
 use std::path::{Path, PathBuf};
 
-pub const APP_ID: &str = "org.enmaster.App";
+pub const APP_ID: &str = "io.github.tecix.eng_master";
 pub const APP_NAME: &str = "en-Master";
+pub const RESOURCE_PATH: &str = "/io/github/tecix/eng_master";
+pub const GETTEXT_PACKAGE: &str = "enmaster";
+pub const VERSION: &str = env!("CARGO_PKG_VERSION");
+pub const WEBSITE: &str = "https://github.com/tecix/eng-master";
+pub const ISSUES: &str = "https://github.com/tecix/eng-master/issues";
+
+/// Running inside Flatpak (or Snap): use portals instead of host tools.
+pub fn sandboxed() -> bool {
+    ashpd::is_sandboxed()
+}
+
+/// Where compiled translations live: `/app/share/locale` in Flatpak, `~/.local/share/locale` otherwise.
+pub fn locale_dir() -> PathBuf {
+    if let Some(dir) = option_env!("ENMASTER_LOCALEDIR") {
+        return dir.into();
+    }
+    if sandboxed() {
+        return PathBuf::from("/app/share/locale");
+    }
+    dirs::data_dir().unwrap_or_else(|| home().join(".local/share")).join("locale")
+}
 
 fn home() -> PathBuf {
     dirs::home_dir().unwrap_or_else(|| PathBuf::from("/tmp"))
@@ -18,9 +39,7 @@ pub fn config_dir() -> PathBuf {
     if let Some(dir) = std::env::var_os("ENMASTER_CONFIG_DIR") {
         return dir.into();
     }
-    dirs::config_dir()
-        .unwrap_or_else(|| home().join(".config"))
-        .join("enmaster")
+    dirs::config_dir().unwrap_or_else(|| home().join(".config")).join("enmaster")
 }
 
 /// `~/.local/share/enmaster` (override with `ENMASTER_DATA_DIR`).
@@ -28,9 +47,7 @@ pub fn data_dir() -> PathBuf {
     if let Some(dir) = std::env::var_os("ENMASTER_DATA_DIR") {
         return dir.into();
     }
-    dirs::data_dir()
-        .unwrap_or_else(|| home().join(".local/share"))
-        .join("enmaster")
+    dirs::data_dir().unwrap_or_else(|| home().join(".local/share")).join("enmaster")
 }
 
 /// The app's name before it became en-Master.

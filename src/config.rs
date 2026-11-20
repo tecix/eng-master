@@ -24,6 +24,10 @@ pub struct Config {
     pub log_full_text: bool,
     /// Cards per daily drill.
     pub drill_size: usize,
+    /// Notify when drill cards are due.
+    pub reminder: bool,
+    /// Time of the daily reminder, "HH:MM".
+    pub reminder_time: String,
     /// Extra actions, shown after the built-in ones.
     pub actions: Vec<CustomAction>,
 }
@@ -33,6 +37,9 @@ pub struct CustomAction {
     pub id: String,
     pub label: String,
     pub task: String,
+    /// Symbolic icon name, e.g. "document-edit-symbolic".
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub icon: Option<String>,
 }
 
 impl Default for Config {
@@ -44,11 +51,11 @@ impl Default for Config {
             explain_language: "Vietnamese".into(),
             personal_context: String::new(),
             // KEY_LEFTCTRL = 29, KEY_V = 47
-            paste_command: ["ydotool", "key", "29:1", "47:1", "47:0", "29:0"]
-                .map(String::from)
-                .to_vec(),
+            paste_command: ["ydotool", "key", "29:1", "47:1", "47:0", "29:0"].map(String::from).to_vec(),
             log_full_text: false,
             drill_size: 8,
+            reminder: true,
+            reminder_time: "09:30".into(),
             actions: Vec::new(),
         }
     }
@@ -81,6 +88,10 @@ log_full_text = false
 # Cards per daily drill.
 drill_size = 8
 
+# Daily notification when drill cards are due.
+reminder = true
+reminder_time = "09:30"
+
 # Your own actions. They return the same feedback (text, mistakes, phrases).
 # [[actions]]
 # id = "apology"
@@ -103,6 +114,25 @@ pub fn load() -> Result<Config> {
     toml::from_str(&text).with_context(|| format!("{} is not valid TOML", path.display()))
 }
 
+/// Save settings changed in Preferences. Comments in the file are replaced by a short header.
+pub fn save(cfg: &Config) -> Result<()> {
+    let body = toml::to_string_pretty(cfg)?;
+    let text = format!(
+        "# en-Master settings. Most of these are also in Preferences (Ctrl+,).\n\
+         # Add your own actions as [[actions]] tables with id, label and task.\n\n{body}"
+    );
+    paths::ensure_dir(&paths::config_dir())?;
+    std::fs::write(config_path(), text)?;
+    Ok(())
+}
+
+/// "HH:MM" as hours and minutes.
+pub fn parse_time(text: &str) -> Option<(u32, u32)> {
+    let (h, m) = text.split_once(':')?;
+    let (h, m) = (h.parse::<u32>().ok()?, m.parse::<u32>().ok()?);
+    (h < 24 && m < 60 && text.len() == 5).then_some((h, m))
+}
+
 /// Things the app learns at run time; not meant for hand editing.
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
 #[serde(default)]
@@ -114,6 +144,8 @@ pub struct State {
     pub schema_supported: Option<bool>,
     /// Whether the plan endpoint accepted `reasoning.effort` for `model`.
     pub effort_supported: Option<bool>,
+    /// Day the drill reminder was last shown, so it fires once a day.
+    pub reminded_on: Option<chrono::NaiveDate>,
 }
 
 fn state_path() -> PathBuf {
@@ -122,10 +154,7 @@ fn state_path() -> PathBuf {
 
 impl State {
     pub fn load() -> State {
-        std::fs::read(state_path())
-            .ok()
-            .and_then(|bytes| serde_json::from_slice(&bytes).ok())
-            .unwrap_or_default()
+        std::fs::read(state_path()).ok().and_then(|bytes| serde_json::from_slice(&bytes).ok()).unwrap_or_default()
     }
 
     pub fn save(&self) -> Result<()> {
@@ -136,6 +165,24 @@ impl State {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn saved_settings_load_back() {
+        let cfg = Config {
+            personal_context: "PM \"quotes\"".into(),
+            actions: vec![CustomAction { id: "a".into(), label: "A".into(), task: "t".into(), icon: None }],
+            ..Config::default()
+        };
+        let text = toml::to_string_pretty(&cfg).unwrap();
+        assert_eq!(toml::from_str::<Config>(&text).unwrap(), cfg);
+    }
+
+    #[test]
+    fn times_are_validated() {
+        assert_eq!(parse_time("09:30"), Some((9, 30)));
+        assert_eq!(parse_time("9:30"), None);
+        assert_eq!(parse_time("24:00"), None);
+    }
 
     #[test]
     fn template_matches_defaults() {

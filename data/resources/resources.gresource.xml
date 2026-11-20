@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/io/github/tecix/eng_master">
+    <file preprocess="xml-stripblanks">icons/scalable/actions/enmaster-chat-symbolic.svg</file>
+    <file preprocess="xml-stripblanks">icons/scalable/actions/enmaster-megaphone-symbolic.svg</file>
+    <file preprocess="xml-stripblanks">icons/scalable/actions/enmaster-lightbulb-symbolic.svg</file>
+    <file preprocess="xml-stripblanks">icons/scalable/actions/enmaster-speech-symbolic.svg</file>
+    <file preprocess="xml-stripblanks">icons/scalable/apps/io.github.tecix.eng_master.svg</file>
+    <file>style.css</file>
+  </gresource>
+</gresources>

@@ -41,8 +41,7 @@ impl Card {
         if answer.is_empty() {
             return false;
         }
-        answer == normalize(&self.mistake.fix)
-            || self.corrected_sentence().is_some_and(|s| normalize(&s) == answer)
+        answer == normalize(&self.mistake.fix) || self.corrected_sentence().is_some_and(|s| normalize(&s) == answer)
     }
 }
 
@@ -155,7 +154,10 @@ mod tests {
         let entries = vec![entry(1, vec![a.clone(), b.clone(), b.clone()]), entry(0, vec![c.clone()])];
         let mut deck = Deck::default();
         deck.cards.insert(card_key(&c), CardState { due: Some(today()), ..Default::default() });
-        deck.cards.insert(card_key(&a), CardState { due: Some(NaiveDate::from_ymd_opt(2026, 12, 1).unwrap()), ..Default::default() });
+        deck.cards.insert(
+            card_key(&a),
+            CardState { due: Some(NaiveDate::from_ymd_opt(2026, 12, 1).unwrap()), ..Default::default() },
+        );
         let picked = due(&entries, &deck, today(), 10);
         let keys: Vec<&str> = picked.iter().map(|c| c.mistake.original.as_str()).collect();
         assert_eq!(keys, ["a3", "a2"]);

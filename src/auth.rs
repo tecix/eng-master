@@ -83,9 +83,8 @@ fn now() -> i64 {
 fn load() -> Result<Credentials> {
     match keyring::read()? {
         None => Ok(Credentials::default()),
-        Some(json) => serde_json::from_str(&json).context(
-            "the saved ChatGPT connection is invalid; delete the \"en-Master\" item in Passwords and Keys",
-        ),
+        Some(json) => serde_json::from_str(&json)
+            .context("the saved ChatGPT connection is invalid; delete the \"en-Master\" item in Passwords and Keys"),
     }
 }
 
@@ -376,9 +375,10 @@ pub fn access_token() -> Result<String> {
         match result {
             Ok(tokens) => {
                 if let Some(claims) = id_token_claims(&tokens, &creds.client_id, None)?
-                    && claims.get("sub").and_then(Value::as_str) != Some(creds.subject.as_str()) {
-                        bail!("The ChatGPT account changed. Sign in again.");
-                    }
+                    && claims.get("sub").and_then(Value::as_str) != Some(creds.subject.as_str())
+                {
+                    bail!("The ChatGPT account changed. Sign in again.");
+                }
                 apply_tokens(&mut creds, &tokens)?;
                 save(&creds)?;
             }
@@ -464,7 +464,8 @@ mod tests {
 
     #[test]
     fn id_token_claims_are_checked() {
-        let good = serde_json::json!({"iss": ISSUER, "aud": "oaiapp_1", "exp": now() + 600, "sub": "user-1", "nonce": "n"});
+        let good =
+            serde_json::json!({"iss": ISSUER, "aud": "oaiapp_1", "exp": now() + 600, "sub": "user-1", "nonce": "n"});
         let tokens = serde_json::json!({"id_token": jwt(good.clone())});
         assert!(id_token_claims(&tokens, "oaiapp_1", Some("n")).unwrap().is_some());
         assert!(id_token_claims(&tokens, "oaiapp_1", Some("other")).is_err());
@@ -482,6 +483,9 @@ mod tests {
         apply_tokens(&mut creds, &tokens).unwrap();
         assert_eq!(creds.refresh_token, "new");
         assert!(creds.has_plan_access());
-        assert!(apply_tokens(&mut creds, &serde_json::json!({"token_type": "mac", "access_token": "a", "expires_in": 1})).is_err());
+        assert!(
+            apply_tokens(&mut creds, &serde_json::json!({"token_type": "mac", "access_token": "a", "expires_in": 1}))
+                .is_err()
+        );
     }
 }

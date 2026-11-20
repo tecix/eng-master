@@ -1,0 +1,801 @@
+# Vietnamese translation for en-Master.
+# Copyright (C) 2026 Tecix
+# This file is distributed under the same license as the enmaster package.
+# Tecix, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: enmaster\n"
+"Report-Msgid-Bugs-To: https://github.com/tecix/eng-master/issues\n"
+"POT-Creation-Date: 2026-11-20 22:37+0700\n"
+"PO-Revision-Date: 2026-11-20 22:30+0700\n"
+"Last-Translator: Tecix\n"
+"Language-Team: Vietnamese\n"
+"Language: vi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: src/actions.rs:20 src/ui/preferences.rs:60
+msgid "Coach"
+msgstr "Sửa lỗi"
+
+#: src/actions.rs:21
+msgid "Client Email"
+msgstr "Email khách hàng"
+
+#: src/actions.rs:22
+msgid "Chat"
+msgstr "Tin nhắn"
+
+#: src/actions.rs:23
+msgid "Social Post"
+msgstr "Bài đăng mạng xã hội"
+
+#: src/actions.rs:24
+msgid "Say It Natively"
+msgstr "Nói như người bản xứ"
+
+#: src/actions.rs:25
+msgid "Vietnamese to English"
+msgstr "Việt sang Anh"
+
+#: src/actions.rs:114
+msgid "Articles (a/an/the)"
+msgstr "Mạo từ (a/an/the)"
+
+#: src/actions.rs:115
+msgid "Verb tense"
+msgstr "Thì của động từ"
+
+#: src/actions.rs:116
+msgid "Verb form"
+msgstr "Dạng động từ"
+
+#: src/actions.rs:117
+msgid "Subject–verb agreement"
+msgstr "Hoà hợp chủ ngữ – động từ"
+
+#: src/actions.rs:118
+msgid "Singular and plural"
+msgstr "Số ít và số nhiều"
+
+#: src/actions.rs:119
+msgid "Prepositions"
+msgstr "Giới từ"
+
+#: src/actions.rs:120
+msgid "Word choice"
+msgstr "Chọn từ"
+
+#: src/actions.rs:121
+msgid "Collocations"
+msgstr "Kết hợp từ"
+
+#: src/actions.rs:122
+msgid "Word order"
+msgstr "Trật tự từ"
+
+#: src/actions.rs:123
+msgid "Spelling"
+msgstr "Chính tả"
+
+#: src/actions.rs:124
+msgid "Punctuation"
+msgstr "Dấu câu"
+
+#: src/actions.rs:125
+msgid "Capitalization"
+msgstr "Viết hoa"
+
+#: src/actions.rs:126
+msgid "Tone and politeness"
+msgstr "Giọng điệu và phép lịch sự"
+
+#: src/actions.rs:127
+msgid "Clarity"
+msgstr "Độ rõ ràng"
+
+#: src/actions.rs:128
+msgid "Wordiness"
+msgstr "Dài dòng"
+
+#: src/actions.rs:129
+msgid "Other"
+msgstr "Khác"
+
+#: src/ui/background.rs:72
+msgid "Daily English drill"
+msgstr "Ôn tập tiếng Anh hằng ngày"
+
+#: src/ui/background.rs:74
+msgid "{} past mistake to review, about {} minute."
+msgid_plural "{} past mistakes to review, about {} minutes."
+msgstr[0] "Có {} lỗi cũ cần ôn, khoảng {} phút."
+
+#: src/ui/background.rs:80
+msgid "Start Drill"
+msgstr "Bắt đầu ôn"
+
+#: src/ui/background.rs:120
+msgid "Remind you about daily drills and listen for global shortcuts"
+msgstr "Nhắc bạn ôn tập hằng ngày và nhận phím tắt toàn hệ thống"
+
+#: src/ui/coach.rs:93
+msgid "The settings file has an error, so defaults are used: {}"
+msgstr "Tệp cài đặt có lỗi nên đang dùng giá trị mặc định: {}"
+
+#: src/ui/coach.rs:98
+msgid "Unknown action “{}”"
+msgstr "Không có thao tác “{}”"
+
+#: src/ui/coach.rs:111
+msgid "Could not check the ChatGPT connection"
+msgstr "Không kiểm tra được kết nối ChatGPT"
+
+#: src/ui/coach.rs:118
+msgid "From your selection"
+msgstr "Từ vùng chọn"
+
+#: src/ui/coach.rs:119
+msgid "From the clipboard"
+msgstr "Từ bộ nhớ tạm"
+
+#: src/ui/coach.rs:120
+msgid "Type or paste your text"
+msgstr "Gõ hoặc dán văn bản"
+
+#: src/ui/coach.rs:176 src/ui/drill.rs:226
+msgid "_Progress"
+msgstr "_Tiến độ"
+
+#: src/ui/coach.rs:177
+msgid "_Daily Drill"
+msgstr "Ô_n tập hằng ngày"
+
+#: src/ui/coach.rs:180
+msgid "_Preferences"
+msgstr "Tù_y chỉnh"
+
+#: src/ui/coach.rs:181
+msgid "_Keyboard Shortcuts"
+msgstr "_Phím tắt"
+
+#: src/ui/coach.rs:182
+msgid "_About en-Master"
+msgstr "_Giới thiệu en-Master"
+
+#: src/ui/coach.rs:188 src/ui/coach.rs:190
+msgid "Main Menu"
+msgstr "Trình đơn chính"
+
+#: src/ui/coach.rs:195 src/ui/preferences.rs:335
+msgid "Keyboard Shortcuts"
+msgstr "Phím tắt"
+
+#: src/ui/coach.rs:201
+msgid "Your Text"
+msgstr "Văn bản của bạn"
+
+#: src/ui/coach.rs:204
+msgid "edit"
+msgstr "sửa"
+
+#: src/ui/coach.rs:207
+msgid "Your text"
+msgstr "Văn bản của bạn"
+
+#: src/ui/coach.rs:218
+msgid "Actions"
+msgstr "Thao tác"
+
+#: src/ui/coach.rs:235
+msgid "run Coach"
+msgstr "sửa lỗi"
+
+#: src/ui/coach.rs:236
+msgid "pick with arrow keys"
+msgstr "chọn bằng phím mũi tên"
+
+#: src/ui/coach.rs:237
+msgid "run again"
+msgstr "chạy lại"
+
+#: src/ui/coach.rs:238
+msgid "all shortcuts"
+msgstr "tất cả phím tắt"
+
+#: src/ui/coach.rs:247
+msgid "cancel"
+msgstr "huỷ"
+
+#: src/ui/coach.rs:254 src/ui/coach.rs:257
+msgid "Result"
+msgstr "Kết quả"
+
+#: src/ui/coach.rs:255 src/ui/coach.rs:258
+msgid "Changes"
+msgstr "Thay đổi"
+
+#: src/ui/coach.rs:263
+msgid "switch"
+msgstr "chuyển"
+
+#: src/ui/coach.rs:273
+msgid "What to Learn"
+msgstr "Điều cần học"
+
+#: src/ui/coach.rs:300
+msgid "Continue with ChatGPT"
+msgstr "Tiếp tục với ChatGPT"
+
+#: src/ui/coach.rs:310
+msgid "Connect Your ChatGPT Plan"
+msgstr "Kết nối gói ChatGPT của bạn"
+
+#: src/ui/coach.rs:311
+msgid ""
+"en-Master uses your ChatGPT plan, so no API key is needed. Signing in opens "
+"your web browser."
+msgstr "en-Master dùng gói ChatGPT của bạn nên không cần API key. Khi đăng nhập, trình duyệt web sẽ mở ra."
+
+#: src/ui/coach.rs:323
+msgid "Using ChatGPT plan · <a href=\"{}\">Manage usage</a>"
+msgstr "Đang dùng gói ChatGPT · <a href=\"{}\">Quản lý lượt dùng</a>"
+
+#: src/ui/coach.rs:328
+msgid "_Copy"
+msgstr "_Sao chép"
+
+#: src/ui/coach.rs:330
+msgid "_Replace"
+msgstr "_Thay thế"
+
+#: src/ui/coach.rs:330
+msgid "Copy and _Close"
+msgstr "Sao chép và đón_g"
+
+#: src/ui/coach.rs:335
+msgid "Paste into the app you came from"
+msgstr "Dán vào ứng dụng bạn vừa dùng"
+
+#: src/ui/coach.rs:335
+msgid "Copy the result and close"
+msgstr "Sao chép kết quả rồi đóng"
+
+#: src/ui/coach.rs:367
+msgid "Manage usage"
+msgstr "Quản lý lượt dùng"
+
+#: src/ui/coach.rs:432
+msgid "Copied"
+msgstr "Đã sao chép"
+
+#: src/ui/coach.rs:452
+msgid "No action to repeat yet"
+msgstr "Chưa có thao tác nào để chạy lại"
+
+#: src/ui/coach.rs:525 src/ui/coach.rs:659
+msgid "{}: writing… {} characters"
+msgstr "{}: đang viết… {} ký tự"
+
+#: src/ui/coach.rs:612
+msgid "Cancelled"
+msgstr "Đã huỷ"
+
+#: src/ui/coach.rs:622
+msgid "Select some text first, or type it in the box"
+msgstr "Hãy chọn văn bản trước, hoặc gõ vào ô"
+
+#: src/ui/coach.rs:632
+msgid "{}: asking ChatGPT…"
+msgstr "{}: đang hỏi ChatGPT…"
+
+#: src/ui/coach.rs:704
+msgid "No feedback details this time"
+msgstr "Lần này không có nhận xét chi tiết"
+
+#: src/ui/coach.rs:705
+msgid ""
+"The model answered with plain text, so nothing was added to your learning "
+"log."
+msgstr "Mô hình trả lời bằng văn bản thường nên không có gì được thêm vào nhật ký học."
+
+#: src/ui/coach.rs:708
+msgid "No mistakes found. Nice work!"
+msgstr "Không có lỗi nào. Rất tốt!"
+
+#: src/ui/coach.rs:726
+msgid "{} mistake"
+msgid_plural "{} mistakes"
+msgstr[0] "{} lỗi"
+
+#: src/ui/coach.rs:733
+msgid "replace"
+msgstr "thay thế"
+
+#: src/ui/coach.rs:733
+msgid "copy and close"
+msgstr "sao chép và đóng"
+
+#: src/ui/coach.rs:788
+msgid "Copied. Press Ctrl+V to paste ({})"
+msgstr "Đã sao chép. Nhấn Ctrl+V để dán ({})"
+
+#: src/ui/coach.rs:795
+msgid "Finish signing in in your web browser…"
+msgstr "Hãy hoàn tất đăng nhập trong trình duyệt…"
+
+#: src/ui/coach.rs:807
+msgid "Connected to ChatGPT"
+msgstr "Đã kết nối ChatGPT"
+
+#: src/ui/coach.rs:807 src/ui/preferences.rs:296
+msgid "Connected as {}"
+msgstr "Đã kết nối với tài khoản {}"
+
+#: src/ui/coach.rs:812
+msgid "Signing in stopped unexpectedly"
+msgstr "Đăng nhập bị dừng bất ngờ"
+
+#: src/ui/coach.rs:825
+msgid "You’re Using Your ChatGPT Plan"
+msgstr "Bạn đang dùng gói ChatGPT của mình"
+
+#: src/ui/coach.rs:827
+msgid ""
+"Corrections and drills count toward your ChatGPT plan’s usage limits. You "
+"can set a limit for this app under Manage Usage."
+msgstr "Các lần sửa lỗi và ôn tập được tính vào hạn mức của gói ChatGPT. Bạn có thể đặt giới hạn riêng cho ứng dụng này trong Quản lý lượt dùng."
+
+#: src/ui/coach.rs:830
+msgid "_Manage Usage"
+msgstr "_Quản lý lượt dùng"
+
+#: src/ui/coach.rs:831
+msgid "_Got It"
+msgstr "Đã _hiểu"
+
+#: src/ui/drill.rs:39 src/ui/preferences.rs:224
+msgid "Daily Drill"
+msgstr "Ôn tập hằng ngày"
+
+#: src/ui/drill.rs:63
+msgid "Nothing to Review Today"
+msgstr "Hôm nay không có gì cần ôn"
+
+#: src/ui/drill.rs:64
+msgid "Keep writing with the coach. The mistakes it finds become drill cards."
+msgstr "Cứ tiếp tục viết với en-Master. Những lỗi được tìm thấy sẽ thành thẻ ôn tập."
+
+#: src/ui/drill.rs:100
+msgid "Drill Done"
+msgstr "Đã ôn xong"
+
+#: src/ui/drill.rs:102
+msgid "{} of {} right on the first try. Cards you missed come back tomorrow."
+msgstr "Đúng {} trên {} thẻ ngay lần đầu. Các thẻ sai sẽ quay lại vào ngày mai."
+
+#: src/ui/drill.rs:122
+msgid "Card {} of {}"
+msgstr "Thẻ {} / {}"
+
+#: src/ui/drill.rs:131
+msgid "Type the underlined part correctly, or the whole sentence."
+msgstr "Gõ lại phần gạch chân cho đúng, hoặc cả câu."
+
+#: src/ui/drill.rs:132 src/ui/drill.rs:133
+msgid "Your correction"
+msgstr "Câu sửa của bạn"
+
+#: src/ui/drill.rs:136
+msgid "check"
+msgstr "kiểm tra"
+
+#: src/ui/drill.rs:137
+msgid "close"
+msgstr "đóng"
+
+#: src/ui/drill.rs:163
+msgid "Correct"
+msgstr "Đúng"
+
+#: src/ui/drill.rs:163
+msgid "Not quite"
+msgstr "Chưa đúng"
+
+#: src/ui/drill.rs:178
+msgid "I Was _Right"
+msgstr "Tôi đã _đúng"
+
+#: src/ui/drill.rs:185
+msgid "_Next"
+msgstr "_Tiếp"
+
+#: src/ui/drill.rs:232
+msgid "_Close"
+msgstr "Đón_g"
+
+#: src/ui/mod.rs:132
+msgid "Practise English writing on the text you write"
+msgstr "Luyện viết tiếng Anh ngay trên văn bản bạn soạn"
+
+#. Translators: put your name and email here, one translator per line.
+#: src/ui/mod.rs:134
+msgid "translator-credits"
+msgstr "Tecix"
+
+#: src/ui/mod.rs:138
+msgid "Inspired by"
+msgstr "Lấy cảm hứng từ"
+
+#: src/ui/mod.rs:154
+msgid "Anywhere in GNOME"
+msgstr "Ở bất kỳ đâu trong GNOME"
+
+#: src/ui/mod.rs:156 src/ui/preferences.rs:342
+msgid "Coach the selected text"
+msgstr "Sửa lỗi văn bản đang chọn"
+
+#: src/ui/mod.rs:157 src/ui/preferences.rs:343
+msgid "Open en-Master on the selected text"
+msgstr "Mở en-Master với văn bản đang chọn"
+
+#: src/ui/mod.rs:158 src/ui/mod.rs:182 src/ui/preferences.rs:344
+msgid "Daily drill"
+msgstr "Ôn tập hằng ngày"
+
+#: src/ui/mod.rs:162 src/ui/preferences.rs:57
+msgid "Writing"
+msgstr "Viết"
+
+#: src/ui/mod.rs:164
+msgid "Run action 1 to 9"
+msgstr "Chạy thao tác 1 đến 9"
+
+#: src/ui/mod.rs:165
+msgid "Pick an action with the arrow keys"
+msgstr "Chọn thao tác bằng phím mũi tên"
+
+#: src/ui/mod.rs:166
+msgid "Run Coach, or replace once there is a result"
+msgstr "Sửa lỗi, hoặc thay thế khi đã có kết quả"
+
+#: src/ui/mod.rs:167
+msgid "Run the last action again"
+msgstr "Chạy lại thao tác vừa dùng"
+
+#: src/ui/mod.rs:168
+msgid "Edit your text"
+msgstr "Sửa văn bản của bạn"
+
+#: src/ui/mod.rs:169
+msgid "Switch between result and changes"
+msgstr "Chuyển giữa kết quả và thay đổi"
+
+#: src/ui/mod.rs:170
+msgid "Copy the result"
+msgstr "Sao chép kết quả"
+
+#: src/ui/mod.rs:171
+msgid "Cancel the request, or close"
+msgstr "Huỷ yêu cầu, hoặc đóng"
+
+#: src/ui/mod.rs:175 src/ui/progress.rs:110
+msgid "Practice"
+msgstr "Luyện tập"
+
+#: src/ui/mod.rs:177
+msgid "Check the answer, or go to the next card"
+msgstr "Kiểm tra câu trả lời, hoặc sang thẻ tiếp"
+
+#: src/ui/mod.rs:178
+msgid "I was right (after a miss)"
+msgstr "Tôi đã đúng (khi bị chấm sai)"
+
+#: src/ui/mod.rs:179 src/ui/progress.rs:30
+msgid "Progress"
+msgstr "Tiến độ"
+
+#: src/ui/mod.rs:180
+msgid "Progress: last 7, 30 or 90 days"
+msgstr "Tiến độ: 7, 30 hoặc 90 ngày qua"
+
+#: src/ui/mod.rs:181
+msgid "Progress: export for Anki"
+msgstr "Tiến độ: xuất sang Anki"
+
+#: src/ui/mod.rs:186
+msgid "General"
+msgstr "Chung"
+
+#: src/ui/mod.rs:188
+msgid "Keyboard shortcuts"
+msgstr "Phím tắt"
+
+#: src/ui/mod.rs:189
+msgid "Preferences"
+msgstr "Tuỳ chỉnh"
+
+#: src/ui/mod.rs:190
+msgid "Close window"
+msgstr "Đóng cửa sổ"
+
+#: src/ui/mod.rs:191
+msgid "Quit en-Master"
+msgstr "Thoát en-Master"
+
+#: src/ui/preferences.rs:22
+msgid "A2, elementary"
+msgstr "A2, sơ cấp"
+
+#: src/ui/preferences.rs:23
+msgid "B1, intermediate"
+msgstr "B1, trung cấp"
+
+#: src/ui/preferences.rs:24
+msgid "B1 to B2, intermediate"
+msgstr "B1 đến B2, trung cấp"
+
+#: src/ui/preferences.rs:25
+msgid "B2, upper intermediate"
+msgstr "B2, trung cao cấp"
+
+#: src/ui/preferences.rs:26
+msgid "C1, advanced"
+msgstr "C1, cao cấp"
+
+#: src/ui/preferences.rs:64 src/ui/preferences.rs:86 src/ui/preferences.rs:105
+msgid "Automatic"
+msgstr "Tự động"
+
+#: src/ui/preferences.rs:69
+msgid "Model"
+msgstr "Mô hình"
+
+#: src/ui/preferences.rs:70
+msgid "Automatic uses the first model your plan offers"
+msgstr "Tự động dùng mô hình đầu tiên mà gói của bạn cung cấp"
+
+#: src/ui/preferences.rs:105
+msgid "Low (fastest)"
+msgstr "Thấp (nhanh nhất)"
+
+#: src/ui/preferences.rs:105
+msgid "Medium"
+msgstr "Vừa"
+
+#: src/ui/preferences.rs:105
+msgid "High"
+msgstr "Cao"
+
+#: src/ui/preferences.rs:106
+msgid "Thinking Effort"
+msgstr "Mức suy luận"
+
+#: src/ui/preferences.rs:121
+msgid "Your English Level"
+msgstr "Trình độ tiếng Anh của bạn"
+
+#: src/ui/preferences.rs:134
+msgid "Explain Mistakes In"
+msgstr "Giải thích lỗi bằng"
+
+#: src/ui/preferences.rs:148
+msgid "About You and Who You Write To"
+msgstr "Về bạn và người bạn viết cho"
+
+#: src/ui/preferences.rs:163
+msgid "Replace"
+msgstr "Thay thế"
+
+#: src/ui/preferences.rs:165
+msgid "Paste Automatically"
+msgstr "Tự động dán"
+
+#: src/ui/preferences.rs:166
+msgid "Press Ctrl+V in the app you came from, using ydotool"
+msgstr "Nhấn Ctrl+V trong ứng dụng bạn vừa dùng, bằng ydotool"
+
+#: src/ui/preferences.rs:180
+msgid "Custom Actions"
+msgstr "Thao tác riêng"
+
+#: src/ui/preferences.rs:181
+msgid ""
+"Add your own actions, such as a polite reminder or an apology, in the "
+"settings file."
+msgstr "Thêm thao tác của riêng bạn, ví dụ nhắc nhở lịch sự hay lời xin lỗi, trong tệp cài đặt."
+
+#: src/ui/preferences.rs:184
+msgid "Edit Custom Actions"
+msgstr "Sửa thao tác riêng"
+
+#: src/ui/preferences.rs:205
+msgid "Learning"
+msgstr "Học tập"
+
+#: src/ui/preferences.rs:208
+msgid "Learning Log"
+msgstr "Nhật ký học"
+
+#: src/ui/preferences.rs:210
+msgid "Keep Full Texts"
+msgstr "Lưu toàn văn"
+
+#: src/ui/preferences.rs:211
+msgid "Store what you wrote and the result, not only the mistakes"
+msgstr "Lưu cả văn bản bạn viết và kết quả, không chỉ các lỗi"
+
+#: src/ui/preferences.rs:226
+msgid "Cards per Drill"
+msgstr "Số thẻ mỗi lần ôn"
+
+#: src/ui/preferences.rs:238
+msgid "Daily Reminder"
+msgstr "Nhắc hằng ngày"
+
+#: src/ui/preferences.rs:239
+msgid "A notification when you have mistakes to review"
+msgstr "Thông báo khi có lỗi cần ôn"
+
+#: src/ui/preferences.rs:243
+msgid "Reminder Time"
+msgstr "Giờ nhắc"
+
+#: src/ui/preferences.rs:268
+msgid "Account"
+msgstr "Tài khoản"
+
+#: src/ui/preferences.rs:271
+msgid "ChatGPT"
+msgstr "ChatGPT"
+
+#: src/ui/preferences.rs:272
+msgid "Your text is sent to OpenAI only when you run an action."
+msgstr "Văn bản chỉ được gửi tới OpenAI khi bạn chạy một thao tác."
+
+#: src/ui/preferences.rs:274
+msgid "Checking…"
+msgstr "Đang kiểm tra…"
+
+#: src/ui/preferences.rs:280 src/ui/progress.rs:128
+msgid "Manage Usage"
+msgstr "Quản lý lượt dùng"
+
+#: src/ui/preferences.rs:281
+msgid "Your plan’s limits for this app"
+msgstr "Hạn mức của gói cho ứng dụng này"
+
+#: src/ui/preferences.rs:296
+msgid "Connected"
+msgstr "Đã kết nối"
+
+#: src/ui/preferences.rs:300
+msgid "Not connected"
+msgstr "Chưa kết nối"
+
+#: src/ui/preferences.rs:304
+msgid "Sign _Out"
+msgstr "Đăng _xuất"
+
+#: src/ui/preferences.rs:304
+msgid "_Continue with ChatGPT"
+msgstr "_Tiếp tục với ChatGPT"
+
+#: src/ui/preferences.rs:337
+msgid "Work in any app. Change them in Settings → Apps → en-Master."
+msgstr "Dùng được trong mọi ứng dụng. Đổi phím trong Cài đặt → Ứng dụng → en-Master."
+
+#: src/ui/preferences.rs:339
+msgid "Work in any app. They are custom shortcuts in Settings → Keyboard."
+msgstr "Dùng được trong mọi ứng dụng. Đây là phím tắt tuỳ chỉnh trong Cài đặt → Bàn phím."
+
+#: src/ui/preferences.rs:352
+msgid "_Add to GNOME"
+msgstr "_Thêm vào GNOME"
+
+#: src/ui/preferences.rs:360
+msgid "Shortcuts added"
+msgstr "Đã thêm phím tắt"
+
+#: src/ui/progress.rs:20
+msgid "7 Days"
+msgstr "7 ngày"
+
+#: src/ui/progress.rs:20
+msgid "30 Days"
+msgstr "30 ngày"
+
+#: src/ui/progress.rs:20
+msgid "90 Days"
+msgstr "90 ngày"
+
+#: src/ui/progress.rs:90
+msgid "Summary"
+msgstr "Tổng quan"
+
+#: src/ui/progress.rs:91
+msgid "{} (previous {})"
+msgstr "{} (kỳ trước {})"
+
+#: src/ui/progress.rs:94
+msgid "Texts Checked"
+msgstr "Số văn bản đã sửa"
+
+#: src/ui/progress.rs:97
+msgid "Words Written"
+msgstr "Số từ đã viết"
+
+#: src/ui/progress.rs:99
+msgid "better"
+msgstr "tốt hơn"
+
+#: src/ui/progress.rs:105
+msgid "Mistakes per 100 Words"
+msgstr "Số lỗi trên 100 từ"
+
+#: src/ui/progress.rs:115
+msgid "Start Today’s Drill"
+msgstr "Bắt đầu ôn tập hôm nay"
+
+#: src/ui/progress.rs:116
+msgid "{} card due"
+msgid_plural "{} cards due"
+msgstr[0] "{} thẻ cần ôn"
+
+#: src/ui/progress.rs:122
+msgid "Export for Anki…"
+msgstr "Xuất sang Anki…"
+
+#: src/ui/progress.rs:123
+msgid "Your mistakes and phrases as flashcards"
+msgstr "Các lỗi và cụm từ của bạn dưới dạng thẻ ghi nhớ"
+
+#: src/ui/progress.rs:129
+msgid "Your ChatGPT plan’s limits for this app"
+msgstr "Hạn mức của gói ChatGPT cho ứng dụng này"
+
+#: src/ui/progress.rs:140
+msgid "Mistake Types"
+msgstr "Loại lỗi"
+
+#: src/ui/progress.rs:141
+msgid "Focus on the top one this week."
+msgstr "Tuần này hãy tập trung vào loại đứng đầu."
+
+#: src/ui/progress.rs:147
+msgid "Previous period: {}"
+msgstr "Kỳ trước: {}"
+
+#: src/ui/progress.rs:164
+msgid "Mistakes You Repeat"
+msgstr "Lỗi bạn hay lặp lại"
+
+#: src/ui/progress.rs:169
+msgid "{}×"
+msgstr "{} lần"
+
+#: src/ui/progress.rs:178
+msgid "Phrases to Remember"
+msgstr "Cụm từ nên nhớ"
+
+#: src/ui/progress.rs:192
+msgid ""
+"No texts checked in this period yet. Select some text anywhere and press "
+"Super+Alt+C."
+msgstr "Kỳ này chưa có văn bản nào. Hãy chọn một đoạn văn bản bất kỳ rồi nhấn Super+Alt+C."
+
+#: src/ui/progress.rs:199
+msgid "Export for Anki"
+msgstr "Xuất sang Anki"
+
+#: src/ui/progress.rs:209
+msgid "Saved {} card. In Anki, choose File → Import."
+msgid_plural "Saved {} cards. In Anki, choose File → Import."
+msgstr[0] "Đã lưu {} thẻ. Trong Anki, chọn File → Import."
+
+#: src/ui/progress.rs:214
+msgid "Could not save: {}"
+msgstr "Không lưu được: {}"

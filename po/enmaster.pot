@@ -1,0 +1,806 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the enmaster package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: enmaster\n"
+"Report-Msgid-Bugs-To: https://github.com/tecix/eng-master/issues\n"
+"POT-Creation-Date: 2026-11-20 22:37+0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: src/actions.rs:20 src/ui/preferences.rs:60
+msgid "Coach"
+msgstr ""
+
+#: src/actions.rs:21
+msgid "Client Email"
+msgstr ""
+
+#: src/actions.rs:22
+msgid "Chat"
+msgstr ""
+
+#: src/actions.rs:23
+msgid "Social Post"
+msgstr ""
+
+#: src/actions.rs:24
+msgid "Say It Natively"
+msgstr ""
+
+#: src/actions.rs:25
+msgid "Vietnamese to English"
+msgstr ""
+
+#: src/actions.rs:114
+msgid "Articles (a/an/the)"
+msgstr ""
+
+#: src/actions.rs:115
+msgid "Verb tense"
+msgstr ""
+
+#: src/actions.rs:116
+msgid "Verb form"
+msgstr ""
+
+#: src/actions.rs:117
+msgid "Subject–verb agreement"
+msgstr ""
+
+#: src/actions.rs:118
+msgid "Singular and plural"
+msgstr ""
+
+#: src/actions.rs:119
+msgid "Prepositions"
+msgstr ""
+
+#: src/actions.rs:120
+msgid "Word choice"
+msgstr ""
+
+#: src/actions.rs:121
+msgid "Collocations"
+msgstr ""
+
+#: src/actions.rs:122
+msgid "Word order"
+msgstr ""
+
+#: src/actions.rs:123
+msgid "Spelling"
+msgstr ""
+
+#: src/actions.rs:124
+msgid "Punctuation"
+msgstr ""
+
+#: src/actions.rs:125
+msgid "Capitalization"
+msgstr ""
+
+#: src/actions.rs:126
+msgid "Tone and politeness"
+msgstr ""
+
+#: src/actions.rs:127
+msgid "Clarity"
+msgstr ""
+
+#: src/actions.rs:128
+msgid "Wordiness"
+msgstr ""
+
+#: src/actions.rs:129
+msgid "Other"
+msgstr ""
+
+#: src/ui/background.rs:72
+msgid "Daily English drill"
+msgstr ""
+
+#: src/ui/background.rs:74
+msgid "{} past mistake to review, about {} minute."
+msgid_plural "{} past mistakes to review, about {} minutes."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/ui/background.rs:80
+msgid "Start Drill"
+msgstr ""
+
+#: src/ui/background.rs:120
+msgid "Remind you about daily drills and listen for global shortcuts"
+msgstr ""
+
+#: src/ui/coach.rs:93
+msgid "The settings file has an error, so defaults are used: {}"
+msgstr ""
+
+#: src/ui/coach.rs:98
+msgid "Unknown action “{}”"
+msgstr ""
+
+#: src/ui/coach.rs:111
+msgid "Could not check the ChatGPT connection"
+msgstr ""
+
+#: src/ui/coach.rs:118
+msgid "From your selection"
+msgstr ""
+
+#: src/ui/coach.rs:119
+msgid "From the clipboard"
+msgstr ""
+
+#: src/ui/coach.rs:120
+msgid "Type or paste your text"
+msgstr ""
+
+#: src/ui/coach.rs:176 src/ui/drill.rs:226
+msgid "_Progress"
+msgstr ""
+
+#: src/ui/coach.rs:177
+msgid "_Daily Drill"
+msgstr ""
+
+#: src/ui/coach.rs:180
+msgid "_Preferences"
+msgstr ""
+
+#: src/ui/coach.rs:181
+msgid "_Keyboard Shortcuts"
+msgstr ""
+
+#: src/ui/coach.rs:182
+msgid "_About en-Master"
+msgstr ""
+
+#: src/ui/coach.rs:188 src/ui/coach.rs:190
+msgid "Main Menu"
+msgstr ""
+
+#: src/ui/coach.rs:195 src/ui/preferences.rs:335
+msgid "Keyboard Shortcuts"
+msgstr ""
+
+#: src/ui/coach.rs:201
+msgid "Your Text"
+msgstr ""
+
+#: src/ui/coach.rs:204
+msgid "edit"
+msgstr ""
+
+#: src/ui/coach.rs:207
+msgid "Your text"
+msgstr ""
+
+#: src/ui/coach.rs:218
+msgid "Actions"
+msgstr ""
+
+#: src/ui/coach.rs:235
+msgid "run Coach"
+msgstr ""
+
+#: src/ui/coach.rs:236
+msgid "pick with arrow keys"
+msgstr ""
+
+#: src/ui/coach.rs:237
+msgid "run again"
+msgstr ""
+
+#: src/ui/coach.rs:238
+msgid "all shortcuts"
+msgstr ""
+
+#: src/ui/coach.rs:247
+msgid "cancel"
+msgstr ""
+
+#: src/ui/coach.rs:254 src/ui/coach.rs:257
+msgid "Result"
+msgstr ""
+
+#: src/ui/coach.rs:255 src/ui/coach.rs:258
+msgid "Changes"
+msgstr ""
+
+#: src/ui/coach.rs:263
+msgid "switch"
+msgstr ""
+
+#: src/ui/coach.rs:273
+msgid "What to Learn"
+msgstr ""
+
+#: src/ui/coach.rs:300
+msgid "Continue with ChatGPT"
+msgstr ""
+
+#: src/ui/coach.rs:310
+msgid "Connect Your ChatGPT Plan"
+msgstr ""
+
+#: src/ui/coach.rs:311
+msgid ""
+"en-Master uses your ChatGPT plan, so no API key is needed. Signing in opens "
+"your web browser."
+msgstr ""
+
+#: src/ui/coach.rs:323
+msgid "Using ChatGPT plan · <a href=\"{}\">Manage usage</a>"
+msgstr ""
+
+#: src/ui/coach.rs:328
+msgid "_Copy"
+msgstr ""
+
+#: src/ui/coach.rs:330
+msgid "_Replace"
+msgstr ""
+
+#: src/ui/coach.rs:330
+msgid "Copy and _Close"
+msgstr ""
+
+#: src/ui/coach.rs:335
+msgid "Paste into the app you came from"
+msgstr ""
+
+#: src/ui/coach.rs:335
+msgid "Copy the result and close"
+msgstr ""
+
+#: src/ui/coach.rs:367
+msgid "Manage usage"
+msgstr ""
+
+#: src/ui/coach.rs:432
+msgid "Copied"
+msgstr ""
+
+#: src/ui/coach.rs:452
+msgid "No action to repeat yet"
+msgstr ""
+
+#: src/ui/coach.rs:525 src/ui/coach.rs:659
+msgid "{}: writing… {} characters"
+msgstr ""
+
+#: src/ui/coach.rs:612
+msgid "Cancelled"
+msgstr ""
+
+#: src/ui/coach.rs:622
+msgid "Select some text first, or type it in the box"
+msgstr ""
+
+#: src/ui/coach.rs:632
+msgid "{}: asking ChatGPT…"
+msgstr ""
+
+#: src/ui/coach.rs:704
+msgid "No feedback details this time"
+msgstr ""
+
+#: src/ui/coach.rs:705
+msgid ""
+"The model answered with plain text, so nothing was added to your learning "
+"log."
+msgstr ""
+
+#: src/ui/coach.rs:708
+msgid "No mistakes found. Nice work!"
+msgstr ""
+
+#: src/ui/coach.rs:726
+msgid "{} mistake"
+msgid_plural "{} mistakes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/ui/coach.rs:733
+msgid "replace"
+msgstr ""
+
+#: src/ui/coach.rs:733
+msgid "copy and close"
+msgstr ""
+
+#: src/ui/coach.rs:788
+msgid "Copied. Press Ctrl+V to paste ({})"
+msgstr ""
+
+#: src/ui/coach.rs:795
+msgid "Finish signing in in your web browser…"
+msgstr ""
+
+#: src/ui/coach.rs:807
+msgid "Connected to ChatGPT"
+msgstr ""
+
+#: src/ui/coach.rs:807 src/ui/preferences.rs:296
+msgid "Connected as {}"
+msgstr ""
+
+#: src/ui/coach.rs:812
+msgid "Signing in stopped unexpectedly"
+msgstr ""
+
+#: src/ui/coach.rs:825
+msgid "You’re Using Your ChatGPT Plan"
+msgstr ""
+
+#: src/ui/coach.rs:827
+msgid ""
+"Corrections and drills count toward your ChatGPT plan’s usage limits. You "
+"can set a limit for this app under Manage Usage."
+msgstr ""
+
+#: src/ui/coach.rs:830
+msgid "_Manage Usage"
+msgstr ""
+
+#: src/ui/coach.rs:831
+msgid "_Got It"
+msgstr ""
+
+#: src/ui/drill.rs:39 src/ui/preferences.rs:224
+msgid "Daily Drill"
+msgstr ""
+
+#: src/ui/drill.rs:63
+msgid "Nothing to Review Today"
+msgstr ""
+
+#: src/ui/drill.rs:64
+msgid "Keep writing with the coach. The mistakes it finds become drill cards."
+msgstr ""
+
+#: src/ui/drill.rs:100
+msgid "Drill Done"
+msgstr ""
+
+#: src/ui/drill.rs:102
+msgid "{} of {} right on the first try. Cards you missed come back tomorrow."
+msgstr ""
+
+#: src/ui/drill.rs:122
+msgid "Card {} of {}"
+msgstr ""
+
+#: src/ui/drill.rs:131
+msgid "Type the underlined part correctly, or the whole sentence."
+msgstr ""
+
+#: src/ui/drill.rs:132 src/ui/drill.rs:133
+msgid "Your correction"
+msgstr ""
+
+#: src/ui/drill.rs:136
+msgid "check"
+msgstr ""
+
+#: src/ui/drill.rs:137
+msgid "close"
+msgstr ""
+
+#: src/ui/drill.rs:163
+msgid "Correct"
+msgstr ""
+
+#: src/ui/drill.rs:163
+msgid "Not quite"
+msgstr ""
+
+#: src/ui/drill.rs:178
+msgid "I Was _Right"
+msgstr ""
+
+#: src/ui/drill.rs:185
+msgid "_Next"
+msgstr ""
+
+#: src/ui/drill.rs:232
+msgid "_Close"
+msgstr ""
+
+#: src/ui/mod.rs:132
+msgid "Practise English writing on the text you write"
+msgstr ""
+
+#. Translators: put your name and email here, one translator per line.
+#: src/ui/mod.rs:134
+msgid "translator-credits"
+msgstr ""
+
+#: src/ui/mod.rs:138
+msgid "Inspired by"
+msgstr ""
+
+#: src/ui/mod.rs:154
+msgid "Anywhere in GNOME"
+msgstr ""
+
+#: src/ui/mod.rs:156 src/ui/preferences.rs:342
+msgid "Coach the selected text"
+msgstr ""
+
+#: src/ui/mod.rs:157 src/ui/preferences.rs:343
+msgid "Open en-Master on the selected text"
+msgstr ""
+
+#: src/ui/mod.rs:158 src/ui/mod.rs:182 src/ui/preferences.rs:344
+msgid "Daily drill"
+msgstr ""
+
+#: src/ui/mod.rs:162 src/ui/preferences.rs:57
+msgid "Writing"
+msgstr ""
+
+#: src/ui/mod.rs:164
+msgid "Run action 1 to 9"
+msgstr ""
+
+#: src/ui/mod.rs:165
+msgid "Pick an action with the arrow keys"
+msgstr ""
+
+#: src/ui/mod.rs:166
+msgid "Run Coach, or replace once there is a result"
+msgstr ""
+
+#: src/ui/mod.rs:167
+msgid "Run the last action again"
+msgstr ""
+
+#: src/ui/mod.rs:168
+msgid "Edit your text"
+msgstr ""
+
+#: src/ui/mod.rs:169
+msgid "Switch between result and changes"
+msgstr ""
+
+#: src/ui/mod.rs:170
+msgid "Copy the result"
+msgstr ""
+
+#: src/ui/mod.rs:171
+msgid "Cancel the request, or close"
+msgstr ""
+
+#: src/ui/mod.rs:175 src/ui/progress.rs:110
+msgid "Practice"
+msgstr ""
+
+#: src/ui/mod.rs:177
+msgid "Check the answer, or go to the next card"
+msgstr ""
+
+#: src/ui/mod.rs:178
+msgid "I was right (after a miss)"
+msgstr ""
+
+#: src/ui/mod.rs:179 src/ui/progress.rs:30
+msgid "Progress"
+msgstr ""
+
+#: src/ui/mod.rs:180
+msgid "Progress: last 7, 30 or 90 days"
+msgstr ""
+
+#: src/ui/mod.rs:181
+msgid "Progress: export for Anki"
+msgstr ""
+
+#: src/ui/mod.rs:186
+msgid "General"
+msgstr ""
+
+#: src/ui/mod.rs:188
+msgid "Keyboard shortcuts"
+msgstr ""
+
+#: src/ui/mod.rs:189
+msgid "Preferences"
+msgstr ""
+
+#: src/ui/mod.rs:190
+msgid "Close window"
+msgstr ""
+
+#: src/ui/mod.rs:191
+msgid "Quit en-Master"
+msgstr ""
+
+#: src/ui/preferences.rs:22
+msgid "A2, elementary"
+msgstr ""
+
+#: src/ui/preferences.rs:23
+msgid "B1, intermediate"
+msgstr ""
+
+#: src/ui/preferences.rs:24
+msgid "B1 to B2, intermediate"
+msgstr ""
+
+#: src/ui/preferences.rs:25
+msgid "B2, upper intermediate"
+msgstr ""
+
+#: src/ui/preferences.rs:26
+msgid "C1, advanced"
+msgstr ""
+
+#: src/ui/preferences.rs:64 src/ui/preferences.rs:86 src/ui/preferences.rs:105
+msgid "Automatic"
+msgstr ""
+
+#: src/ui/preferences.rs:69
+msgid "Model"
+msgstr ""
+
+#: src/ui/preferences.rs:70
+msgid "Automatic uses the first model your plan offers"
+msgstr ""
+
+#: src/ui/preferences.rs:105
+msgid "Low (fastest)"
+msgstr ""
+
+#: src/ui/preferences.rs:105
+msgid "Medium"
+msgstr ""
+
+#: src/ui/preferences.rs:105
+msgid "High"
+msgstr ""
+
+#: src/ui/preferences.rs:106
+msgid "Thinking Effort"
+msgstr ""
+
+#: src/ui/preferences.rs:121
+msgid "Your English Level"
+msgstr ""
+
+#: src/ui/preferences.rs:134
+msgid "Explain Mistakes In"
+msgstr ""
+
+#: src/ui/preferences.rs:148
+msgid "About You and Who You Write To"
+msgstr ""
+
+#: src/ui/preferences.rs:163
+msgid "Replace"
+msgstr ""
+
+#: src/ui/preferences.rs:165
+msgid "Paste Automatically"
+msgstr ""
+
+#: src/ui/preferences.rs:166
+msgid "Press Ctrl+V in the app you came from, using ydotool"
+msgstr ""
+
+#: src/ui/preferences.rs:180
+msgid "Custom Actions"
+msgstr ""
+
+#: src/ui/preferences.rs:181
+msgid ""
+"Add your own actions, such as a polite reminder or an apology, in the "
+"settings file."
+msgstr ""
+
+#: src/ui/preferences.rs:184
+msgid "Edit Custom Actions"
+msgstr ""
+
+#: src/ui/preferences.rs:205
+msgid "Learning"
+msgstr ""
+
+#: src/ui/preferences.rs:208
+msgid "Learning Log"
+msgstr ""
+
+#: src/ui/preferences.rs:210
+msgid "Keep Full Texts"
+msgstr ""
+
+#: src/ui/preferences.rs:211
+msgid "Store what you wrote and the result, not only the mistakes"
+msgstr ""
+
+#: src/ui/preferences.rs:226
+msgid "Cards per Drill"
+msgstr ""
+
+#: src/ui/preferences.rs:238
+msgid "Daily Reminder"
+msgstr ""
+
+#: src/ui/preferences.rs:239
+msgid "A notification when you have mistakes to review"
+msgstr ""
+
+#: src/ui/preferences.rs:243
+msgid "Reminder Time"
+msgstr ""
+
+#: src/ui/preferences.rs:268
+msgid "Account"
+msgstr ""
+
+#: src/ui/preferences.rs:271
+msgid "ChatGPT"
+msgstr ""
+
+#: src/ui/preferences.rs:272
+msgid "Your text is sent to OpenAI only when you run an action."
+msgstr ""
+
+#: src/ui/preferences.rs:274
+msgid "Checking…"
+msgstr ""
+
+#: src/ui/preferences.rs:280 src/ui/progress.rs:128
+msgid "Manage Usage"
+msgstr ""
+
+#: src/ui/preferences.rs:281
+msgid "Your plan’s limits for this app"
+msgstr ""
+
+#: src/ui/preferences.rs:296
+msgid "Connected"
+msgstr ""
+
+#: src/ui/preferences.rs:300
+msgid "Not connected"
+msgstr ""
+
+#: src/ui/preferences.rs:304
+msgid "Sign _Out"
+msgstr ""
+
+#: src/ui/preferences.rs:304
+msgid "_Continue with ChatGPT"
+msgstr ""
+
+#: src/ui/preferences.rs:337
+msgid "Work in any app. Change them in Settings → Apps → en-Master."
+msgstr ""
+
+#: src/ui/preferences.rs:339
+msgid "Work in any app. They are custom shortcuts in Settings → Keyboard."
+msgstr ""
+
+#: src/ui/preferences.rs:352
+msgid "_Add to GNOME"
+msgstr ""
+
+#: src/ui/preferences.rs:360
+msgid "Shortcuts added"
+msgstr ""
+
+#: src/ui/progress.rs:20
+msgid "7 Days"
+msgstr ""
+
+#: src/ui/progress.rs:20
+msgid "30 Days"
+msgstr ""
+
+#: src/ui/progress.rs:20
+msgid "90 Days"
+msgstr ""
+
+#: src/ui/progress.rs:90
+msgid "Summary"
+msgstr ""
+
+#: src/ui/progress.rs:91
+msgid "{} (previous {})"
+msgstr ""
+
+#: src/ui/progress.rs:94
+msgid "Texts Checked"
+msgstr ""
+
+#: src/ui/progress.rs:97
+msgid "Words Written"
+msgstr ""
+
+#: src/ui/progress.rs:99
+msgid "better"
+msgstr ""
+
+#: src/ui/progress.rs:105
+msgid "Mistakes per 100 Words"
+msgstr ""
+
+#: src/ui/progress.rs:115
+msgid "Start Today’s Drill"
+msgstr ""
+
+#: src/ui/progress.rs:116
+msgid "{} card due"
+msgid_plural "{} cards due"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/ui/progress.rs:122
+msgid "Export for Anki…"
+msgstr ""
+
+#: src/ui/progress.rs:123
+msgid "Your mistakes and phrases as flashcards"
+msgstr ""
+
+#: src/ui/progress.rs:129
+msgid "Your ChatGPT plan’s limits for this app"
+msgstr ""
+
+#: src/ui/progress.rs:140
+msgid "Mistake Types"
+msgstr ""
+
+#: src/ui/progress.rs:141
+msgid "Focus on the top one this week."
+msgstr ""
+
+#: src/ui/progress.rs:147
+msgid "Previous period: {}"
+msgstr ""
+
+#: src/ui/progress.rs:164
+msgid "Mistakes You Repeat"
+msgstr ""
+
+#: src/ui/progress.rs:169
+msgid "{}×"
+msgstr ""
+
+#: src/ui/progress.rs:178
+msgid "Phrases to Remember"
+msgstr ""
+
+#: src/ui/progress.rs:192
+msgid ""
+"No texts checked in this period yet. Select some text anywhere and press "
+"Super+Alt+C."
+msgstr ""
+
+#: src/ui/progress.rs:199
+msgid "Export for Anki"
+msgstr ""
+
+#: src/ui/progress.rs:209
+msgid "Saved {} card. In Anki, choose File → Import."
+msgid_plural "Saved {} cards. In Anki, choose File → Import."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/ui/progress.rs:214
+msgid "Could not save: {}"
+msgstr ""

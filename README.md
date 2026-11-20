@@ -1,80 +1,91 @@
-# en-Master
+<div align="center">
+  <img src="data/icons/hicolor/scalable/apps/io.github.tecix.eng_master.svg" width="128" height="128" alt="">
 
-Luyện viết tiếng Anh ngay trên văn bản bạn đang soạn trong GNOME: bôi đen, bấm phím tắt, xem bản sửa,
-diff và lỗi cần học; mọi lỗi được ghi lại để ôn tập theo spaced repetition.
+  # en-Master
 
-Dùng **gói ChatGPT của bạn** (không cần API key) qua cơ chế chính thức
-[Sign in with ChatGPT – token sharing for open-source apps](https://developers.openai.com/siwc/token-sharing-open-source),
-giống cách Plyph làm.
+  Practise English writing on the text you write
 
-## Cài đặt
+  <img src="data/screenshots/coach.png" alt="en-Master correcting a client email">
+</div>
+
+Select text in any app, press <kbd>Super</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd>, and en-Master shows a
+corrected version, every change word by word, and a short explanation of each mistake in your own
+language. Your mistakes go into a learning log that feeds a progress report, daily drills with
+spaced repetition, and an Anki export.
+
+en-Master uses your **ChatGPT plan** through OpenAI's
+[Sign in with ChatGPT for open-source apps](https://developers.openai.com/siwc/token-sharing-open-source),
+so no API key is needed. Your text is sent to OpenAI only when you run an action.
+
+[Tiếng Việt](README.vi.md)
+
+## Features
+
+- Actions for coaching, client emails, chat messages, social posts, natural phrasing and
+  Vietnamese to English, plus your own
+- A word-by-word view of every change, and what to learn from it
+- Progress over 7, 30 or 90 days: mistake types, mistakes you repeat, phrases to remember
+- Daily drills of your own past mistakes, with a reminder notification
+- Fully usable from the keyboard; press <kbd>F1</kbd> for every shortcut
+- Adaptive layout down to 360 pixels wide, light and dark styles, Vietnamese translation
+
+## Keyboard
+
+| Anywhere in GNOME | |
+|---|---|
+| <kbd>Super</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd> | Coach the selected text |
+| <kbd>Super</kbd>+<kbd>Alt</kbd>+<kbd>E</kbd> | Open en-Master on the selected text |
+| <kbd>Super</kbd>+<kbd>Alt</kbd>+<kbd>D</kbd> | Daily drill |
+
+In the window: <kbd>Alt</kbd>+<kbd>1</kbd>…<kbd>9</kbd> run an action, <kbd>Ctrl</kbd>+<kbd>Enter</kbd> runs
+Coach and then replaces your text, <kbd>Ctrl</kbd>+<kbd>D</kbd> shows the changes, <kbd>Esc</kbd> cancels
+or closes.
+
+## Install
+
+### Flatpak
+
+```sh
+# Generate the offline crate list (needs network; uses flatpak-builder-tools)
+uv run --script https://raw.githubusercontent.com/flatpak/flatpak-builder-tools/master/cargo/flatpak-cargo-generator.py \
+  Cargo.lock -o build-aux/cargo-sources.json
+flatpak-builder --user --install --force-clean build-flatpak build-aux/io.github.tecix.eng_master.json
+flatpak run io.github.tecix.eng_master
+```
+
+Inside Flatpak, global shortcuts come from the GlobalShortcuts portal (GNOME asks you to confirm
+them the first time) and the daily reminder uses the Background portal.
+
+### From source, without Flatpak
+
+Needs Rust, GTK 4.20, libadwaita 1.9 and gettext. `xsel` reads the selection without focus, and
+`ydotool` is optional for pasting results back.
 
 ```sh
 cargo build --release
-./target/release/enmaster install          # ~/.local/bin, phím tắt, desktop entry, nhắc ôn 09:30
-enmaster login                              # hoặc bấm "Continue with ChatGPT" trong cửa sổ
+./target/release/enmaster install
 ```
 
-`install --no-timer` bỏ lời nhắc hằng ngày, `install --drill-time 20:00` đổi giờ. `enmaster uninstall` gỡ
-mọi thứ trừ cấu hình và nhật ký học. Bản cài cũ tên `english-mastery` được gỡ tự động; cấu hình, nhật ký học và
-kết nối ChatGPT được chuyển sang tên mới.
+`install` copies the binary to `~/.local/bin` and adds the desktop entry, icons, translations,
+an autostart entry for reminders, and the three GNOME custom shortcuts. `enmaster uninstall`
+removes them and keeps your data.
 
-`enmaster login --register` đăng ký lại app với ChatGPT (để mục ứng dụng đã kết nối trong ChatGPT hiện tên mới).
+## Privacy
 
-## Dùng
+- The ChatGPT connection is stored in the GNOME keyring.
+- The learning log (`~/.local/share/enmaster/log.jsonl`) keeps your mistakes and phrases; full
+  texts only if you turn on **Keep Full Texts**.
+- Requests use `store: false`, and count toward your ChatGPT plan's usage limits, which you
+  can cap per app under [Manage usage](https://chatgpt.com/settings/usage).
 
-Phím tắt toàn hệ thống (GNOME):
+## Contributing
 
-| Phím | Việc |
-|---|---|
-| **Super+Alt+C** | Coach ngay văn bản đang bôi đen |
-| **Super+Alt+E** | Mở en-Master trên văn bản đang bôi đen để chọn action |
-| **Super+Alt+D** | Daily drill |
+Bug reports and pull requests are welcome. See [ARCHITECTURE.md](ARCHITECTURE.md) for how the
+code fits together, and run `cargo test` and `cargo clippy` before sending changes.
+Translations live in `po/`; run `po/update.sh` after changing strings.
 
-Trong cửa sổ, mọi thứ làm được bằng bàn phím; mỗi nút đều hiện phím tắt của nó, **F1** mở bảng tra cứu đầy đủ:
+This project follows the [GNOME Code of Conduct](CODE_OF_CONDUCT.md).
 
-| Phím | Việc |
-|---|---|
-| Alt+1…9 | Chạy action (Coach, Client email, Chat, Social post, Say it natively, VN → EN, action riêng) |
-| Ctrl+K, ← →, Enter | Chọn action bằng phím mũi tên |
-| Ctrl+Enter | Chạy Coach; khi đã có kết quả thì **Replace** (dán vào app cũ qua `ydotool`) |
-| Ctrl+R | Chạy lại action vừa dùng |
-| Ctrl+E | Sửa văn bản gốc |
-| Ctrl+D | Chuyển Result / Changes (diff) |
-| Ctrl+Shift+C | Copy kết quả |
-| Esc | Huỷ yêu cầu đang chạy; nếu không có thì đóng cửa sổ |
-| Ctrl+P / Ctrl+T | Progress / Daily drill |
-| Ctrl+, | Mở file cấu hình |
-| Ctrl+Q | Tắt hẳn en-Master (instance chạy nền) |
+## License
 
-Drill: Enter để kiểm tra rồi sang thẻ tiếp, Alt+R ("I was right") khi máy chấm sai nhưng bạn đúng.
-Progress: Alt+1/2/3 chọn 7/30/90 ngày, Ctrl+S xuất Anki.
-
-Không có gì được bôi đen thì app lấy clipboard, hoặc bạn gõ thẳng vào ô. Sau khi có kết quả, con trỏ nằm sẵn trong
-ô Result để bạn chỉnh câu chữ, rồi Ctrl+Enter để gửi.
-
-Dòng lệnh: `enmaster run email < draft.txt`, `report 30`, `anki ~/deck.txt`, `models`, `status`, `help`.
-
-## Cấu hình
-
-`~/.config/enmaster/config.toml` (Ctrl+, hoặc Menu ☰ → Settings File): model, reasoning effort, trình độ, ngôn ngữ
-giải thích, **personal context** (bạn là ai, viết cho ai), lệnh dán, action riêng (`[[actions]]`).
-
-## Dữ liệu & quyền riêng tư
-
-- Token ChatGPT: GNOME Keyring (mục "en-Master — ChatGPT connection").
-- Nhật ký học: `~/.local/share/enmaster/log.jsonl` (quyền 0600). Mặc định chỉ lưu lỗi và cụm từ,
-  không lưu toàn văn email; bật `log_full_text = true` nếu muốn.
-- Văn bản chỉ được gửi tới OpenAI khi bạn chạy một action, với `store: false`. Lượt dùng tính vào hạn mức gói
-  ChatGPT; đặt giới hạn riêng cho app ở [Manage usage](https://chatgpt.com/settings/usage).
-
-## Cách hoạt động
-
-- Đọc selection: Mutter phản chiếu PRIMARY selection của Wayland sang XWayland, nên `xsel` đọc được mà không
-  cần focus (fallback `xclip`, `wl-paste`).
-- App chạy thường trú sau lần mở đầu (GApplication một instance), nên lần bấm sau mở ngay và clipboard vẫn
-  giữ sau khi đóng cửa sổ. `enmaster quit` để tắt.
-- Đăng nhập: `dynamic_agent_client` + `ext_agent_host_id` ở lần đầu, lưu `oaiapp_…` client ID được cấp; PKCE,
-  state, nonce, callback `127.0.0.1`; refresh token xoay vòng, khoá file để không đua giữa các tiến trình.
-- Gọi `POST /v1/responses` (stream, `store: false`) với structured output JSON; nếu endpoint từ chối
-  `text.format` hoặc `reasoning` thì tự thử lại không có trường đó và ghi nhớ.
+GPL-3.0-or-later. See [COPYING](COPYING).

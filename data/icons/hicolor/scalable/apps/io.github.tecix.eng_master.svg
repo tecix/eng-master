@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="bubble" x1="0" y1="16" x2="0" y2="96" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#62a0ea"/>
+      <stop offset="1" stop-color="#3584e4"/>
+    </linearGradient>
+    <linearGradient id="badge" x1="0" y1="72" x2="0" y2="112" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#57e389"/>
+      <stop offset="1" stop-color="#2ec27e"/>
+    </linearGradient>
+  </defs>
+  <!-- speech bubble: depth, then face -->
+  <path d="M32 22h64c11 0 20 9 20 20v36c0 11-9 20-20 20H52l-22 16c-2 1.5-4.5 0-4-2.5L29 98c-10-1.5-17-9.5-17-20V42c0-11 9-20 20-20z" fill="#1a5fb4"/>
+  <path d="M32 16h64c11 0 20 9 20 20v36c0 11-9 20-20 20H52l-22 16c-2 1.5-4.5 0-4-2.5L29 92c-10-1.5-17-9.5-17-20V36c0-11 9-20 20-20z" fill="url(#bubble)"/>
+  <!-- lines of text -->
+  <rect x="30" y="34" width="68" height="9" rx="4.5" fill="#ffffff"/>
+  <rect x="30" y="50" width="54" height="9" rx="4.5" fill="#ffffff" opacity="0.92"/>
+  <rect x="30" y="66" width="36" height="9" rx="4.5" fill="#ffffff" opacity="0.85"/>
+  <!-- correction badge -->
+  <circle cx="96" cy="96" r="22" fill="#26a269"/>
+  <circle cx="96" cy="92" r="22" fill="url(#badge)"/>
+  <path d="M85 92l7.5 7.5L108 84" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

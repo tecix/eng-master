@@ -67,7 +67,8 @@ pub fn request_body(req: &Request) -> Value {
         body["reasoning"] = json!({"effort": effort});
     }
     if let Some(schema) = &req.schema {
-        body["text"] = json!({"format": {"type": "json_schema", "name": "writing_feedback", "strict": true, "schema": schema}});
+        body["text"] =
+            json!({"format": {"type": "json_schema", "name": "writing_feedback", "strict": true, "schema": schema}});
     }
     body
 }
@@ -151,17 +152,17 @@ impl SseParser {
                 return Err(HttpError::from_json(0, &json!({"error": error})).into());
             }
             "response.incomplete" => {
-                let reason = event
-                    .pointer("/response/incomplete_details/reason")
-                    .and_then(Value::as_str)
-                    .unwrap_or("unknown");
+                let reason =
+                    event.pointer("/response/incomplete_details/reason").and_then(Value::as_str).unwrap_or("unknown");
                 bail!("ChatGPT returned an incomplete response ({reason}). Try a shorter text.");
             }
             "response.output_item.done" => {
-                if let (Some(index), Some(item)) = (event.get("output_index").and_then(Value::as_i64), event.get("item"))
-                    && item.get("type").and_then(Value::as_str) == Some("message") {
-                        self.items.insert(index, item.clone());
-                    }
+                if let (Some(index), Some(item)) =
+                    (event.get("output_index").and_then(Value::as_i64), event.get("item"))
+                    && item.get("type").and_then(Value::as_str) == Some("message")
+                {
+                    self.items.insert(index, item.clone());
+                }
             }
             "response.completed" => {
                 if event.pointer("/response/status").and_then(Value::as_str) != Some("completed") {
@@ -189,9 +190,7 @@ impl SseParser {
     }
 
     pub fn finish(self) -> Result<String> {
-        let text = self
-            .done
-            .ok_or_else(|| anyhow!("ChatGPT disconnected before finishing. Nothing was changed."))?;
+        let text = self.done.ok_or_else(|| anyhow!("ChatGPT disconnected before finishing. Nothing was changed."))?;
         if text.trim().is_empty() {
             bail!("ChatGPT returned no text.");
         }
@@ -255,15 +254,21 @@ mod tests {
                 if let Some(head_end) = text.find("\r\n\r\n") {
                     let length = text[..head_end]
                         .lines()
-                        .find_map(|l| l.to_ascii_lowercase().strip_prefix("content-length:").map(|v| v.trim().parse::<usize>().unwrap()))
+                        .find_map(|l| {
+                            l.to_ascii_lowercase()
+                                .strip_prefix("content-length:")
+                                .map(|v| v.trim().parse::<usize>().unwrap())
+                        })
                         .unwrap_or(0);
                     let chunked = text[..head_end].to_ascii_lowercase().contains("transfer-encoding: chunked");
-                    if (chunked && text.ends_with("0\r\n\r\n")) || (!chunked && request.len() >= head_end + 4 + length) {
+                    if (chunked && text.ends_with("0\r\n\r\n")) || (!chunked && request.len() >= head_end + 4 + length)
+                    {
                         break;
                     }
                 }
             }
-            write!(stream, "HTTP/1.1 {status}\r\nContent-Type: {content_type}\r\nConnection: close\r\n\r\n{body}").unwrap();
+            write!(stream, "HTTP/1.1 {status}\r\nContent-Type: {content_type}\r\nConnection: close\r\n\r\n{body}")
+                .unwrap();
             String::from_utf8_lossy(&request).to_string()
         });
         (base, handle)
@@ -319,7 +324,8 @@ mod tests {
 
     #[test]
     fn body_has_required_fields_and_no_unsupported_ones() {
-        let body = request_body(&Request { model: "m", instructions: "i", input: "t", effort: Some("low"), schema: None });
+        let body =
+            request_body(&Request { model: "m", instructions: "i", input: "t", effort: Some("low"), schema: None });
         assert_eq!(body["store"], false);
         assert_eq!(body["stream"], true);
         assert_eq!(body["reasoning"]["effort"], "low");

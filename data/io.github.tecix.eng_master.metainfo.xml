@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2026 Tecix -->
+<component type="desktop-application">
+  <id>io.github.tecix.eng_master</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+
+  <name>en-Master</name>
+  <summary>Practise English writing on the text you write</summary>
+  <developer id="io.github.tecix">
+    <name>Tecix</name>
+  </developer>
+
+  <description>
+    <p>
+      en-Master is a writing coach for people who write English as a second language.
+      Select text in any app, press a shortcut, and get a corrected version, every change
+      at a glance, and a short explanation of each mistake in your own language.
+    </p>
+    <p>Features:</p>
+    <ul>
+      <li>Actions for coaching, client emails, chat messages, social posts, natural phrasing and Vietnamese to English, plus your own</li>
+      <li>A word-by-word view of every change</li>
+      <li>A learning log of your mistakes and the phrases you picked up</li>
+      <li>Daily drills of your own past mistakes, scheduled with spaced repetition</li>
+      <li>Progress over 7, 30 or 90 days, and export to Anki</li>
+      <li>Fully usable from the keyboard</li>
+    </ul>
+    <p>
+      en-Master uses your ChatGPT plan through “Sign in with ChatGPT”, so no API key is needed.
+      Your text is sent to OpenAI only when you run an action.
+    </p>
+  </description>
+
+  <launchable type="desktop-id">io.github.tecix.eng_master.desktop</launchable>
+  <translation type="gettext">enmaster</translation>
+
+  <url type="homepage">https://github.com/tecix/eng-master</url>
+  <url type="bugtracker">https://github.com/tecix/eng-master/issues</url>
+  <url type="vcs-browser">https://github.com/tecix/eng-master</url>
+  <url type="translate">https://github.com/tecix/eng-master/tree/main/po</url>
+
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/tecix/eng-master/main/data/screenshots/coach.png</image>
+      <caption>Corrections with an explanation of each mistake</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/tecix/eng-master/main/data/screenshots/changes.png</image>
+      <caption>Every change, word by word</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/tecix/eng-master/main/data/screenshots/progress.png</image>
+      <caption>Progress and the mistakes you repeat</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/tecix/eng-master/main/data/screenshots/drill.png</image>
+      <caption>Daily drill of your own past mistakes</caption>
+    </screenshot>
+  </screenshots>
+
+  <content_rating type="oars-1.1">
+    <content_attribute id="social-info">mild</content_attribute>
+  </content_rating>
+
+  <branding>
+    <color type="primary" scheme_preference="light">#99c1f1</color>
+    <color type="primary" scheme_preference="dark">#1a5fb4</color>
+  </branding>
+
+  <requires>
+    <display_length compare="ge">360</display_length>
+    <internet>always</internet>
+  </requires>
+  <supports>
+    <control>keyboard</control>
+    <control>pointing</control>
+    <control>touch</control>
+  </supports>
+
+  <provides>
+    <binary>enmaster</binary>
+  </provides>
+
+  <keywords>
+    <keyword>English</keyword>
+    <keyword>Writing</keyword>
+    <keyword>Grammar</keyword>
+    <keyword>Spelling</keyword>
+    <keyword>Learning</keyword>
+  </keywords>
+
+  <releases>
+    <release version="0.1.0" date="2026-11-20">
+      <description>
+        <p>First release.</p>
+      </description>
+    </release>
+  </releases>
+</component>

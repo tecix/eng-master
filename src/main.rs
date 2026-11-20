@@ -4,6 +4,7 @@ mod auth;
 mod config;
 mod engine;
 mod http;
+mod i18n;
 mod install;
 mod keyring;
 mod learn;
@@ -25,6 +26,7 @@ Window (usually from a GNOME shortcut):
                               (coach, email, chat, social, natural, translate, or your own)
   enmaster drill              today's drill of your past mistakes Super+Alt+D
   enmaster progress           progress report
+  enmaster --background       start without a window (reminders, shortcuts)
   enmaster quit               stop the background instance
   In the window, F1 lists every keyboard shortcut.
 
@@ -39,16 +41,15 @@ Terminal:
   enmaster run ID             read text on stdin, print the result
   enmaster report [DAYS]      progress report (default 7 days)
   enmaster anki [FILE]        export mistakes and phrases for Anki
-  enmaster install [--no-timer] [--drill-time HH:MM]
-                              install to ~/.local/bin, add the GNOME shortcuts
-                              and a daily drill reminder
-  enmaster uninstall          remove shortcuts, timer and binary
-  enmaster drill-reminder     notify when drill cards are due (used by the timer)
+  enmaster install            install to ~/.local (without Flatpak): desktop entry,
+                              icons, translations, GNOME shortcuts, autostart
+  enmaster uninstall          remove what install added (keeps your data)
 ";
 
 fn main() -> ExitCode {
     let args: Vec<String> = std::env::args().collect();
     paths::migrate_legacy();
+    i18n::init();
     let command = args.get(1).map(String::as_str).unwrap_or("");
     let result = match command {
         "-h" | "--help" | "help" => {
@@ -62,18 +63,8 @@ fn main() -> ExitCode {
         "run" => run_stdin(args.get(2).map(String::as_str).unwrap_or("coach")),
         "report" => report(args.get(2).map(String::as_str)),
         "anki" => anki(args.get(2).map(String::as_str)),
-        "install" => {
-            let no_timer = args.iter().any(|a| a == "--no-timer");
-            let time = args
-                .iter()
-                .position(|a| a == "--drill-time")
-                .and_then(|i| args.get(i + 1))
-                .map(String::as_str)
-                .unwrap_or("09:30");
-            install::install(!no_timer, time)
-        }
+        "install" => install::install(),
         "uninstall" => install::uninstall(),
-        "drill-reminder" => drill_reminder(),
         _ => return ui::run(args),
     };
     match result {
@@ -96,7 +87,9 @@ fn logout() -> Result<()> {
     if auth::sign_out()? {
         println!("Signed out.");
     } else {
-        println!("Signed out locally. The token could not be revoked online; you can disconnect the app in ChatGPT settings.");
+        println!(
+            "Signed out locally. The token could not be revoked online; you can disconnect the app in ChatGPT settings."
+        );
     }
     Ok(())
 }
@@ -113,7 +106,13 @@ fn status() -> Result<()> {
         }
     }
     let state = config::State::load();
-    let model = if !cfg.model.is_empty() { cfg.model.clone() } else if !state.model.is_empty() { format!("{} (auto)", state.model) } else { "auto".into() };
+    let model = if !cfg.model.is_empty() {
+        cfg.model.clone()
+    } else if !state.model.is_empty() {
+        format!("{} (auto)", state.model)
+    } else {
+        "auto".into()
+    };
     println!("Model: {model} · effort: {}", cfg.reasoning_effort);
     println!("Settings: {}", config::config_path().display());
     println!("Learning log: {} ({} texts)", learn::log_path().display(), learn::load().len());
@@ -164,24 +163,5 @@ fn anki(file: Option<&str>) -> Result<()> {
     let (text, count) = learn::anki_export(&learn::load());
     std::fs::write(&path, text)?;
     println!("Wrote {count} cards to {}. In Anki: File → Import.", path.display());
-    Ok(())
-}
-
-fn drill_reminder() -> Result<()> {
-    let cfg = config::load()?;
-    let today = chrono::Local::now().date_naive();
-    let due = srs::due(&learn::load(), &srs::Deck::load(), today, cfg.drill_size.max(1)).len();
-    if due == 0 {
-        return Ok(());
-    }
-    let body = format!("{due} of your past mistakes to review (about {} min).", due.div_ceil(3).max(1));
-    let out = std::process::Command::new("notify-send")
-        .args(["--app-name", paths::APP_NAME, "--icon", "accessories-dictionary", "--action=start=Start drill", "--wait"])
-        .args(["Daily English drill", &body])
-        .output()
-        .context("notify-send is not available")?;
-    if String::from_utf8_lossy(&out.stdout).trim() == "start" {
-        std::process::Command::new(std::env::current_exe()?).arg("drill").spawn()?;
-    }
     Ok(())
 }

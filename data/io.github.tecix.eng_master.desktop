@@ -1,0 +1,24 @@
+[Desktop Entry]
+Name=en-Master
+Comment=Practise English writing on the text you write
+Comment[vi]=Luyện viết tiếng Anh ngay trên văn bản bạn soạn
+Exec=enmaster
+Icon=io.github.tecix.eng_master
+Terminal=false
+Type=Application
+Categories=Education;Languages;
+Keywords=English;Writing;Grammar;Spelling;Coach;Email;Drill;
+Keywords[vi]=tiếng Anh;viết;ngữ pháp;chính tả;luyện tập;
+StartupNotify=true
+DBusActivatable=true
+Actions=drill;progress;
+
+[Desktop Action drill]
+Name=Daily Drill
+Name[vi]=Ôn tập hằng ngày
+Exec=enmaster drill
+
+[Desktop Action progress]
+Name=Progress
+Name[vi]=Tiến độ
+Exec=enmaster progress

@@ -224,9 +224,18 @@ pub fn anki_export(entries: &[Entry]) -> (String, usize) {
             continue;
         }
         let context = if m.context.is_empty() { m.original.clone() } else { m.context.clone() };
-        let highlighted = anki_field(&context).replacen(&anki_field(&m.original), &format!("<b><u>{}</u></b>", anki_field(&m.original)), 1);
+        let highlighted = anki_field(&context).replacen(
+            &anki_field(&m.original),
+            &format!("<b><u>{}</u></b>", anki_field(&m.original)),
+            1,
+        );
         let front = format!("Fix the mistake:<br>{highlighted}");
-        let back = format!("<b>{}</b> → <b>{}</b><br>{}", anki_field(&m.original), anki_field(&m.fix), anki_field(&m.explanation));
+        let back = format!(
+            "<b>{}</b> → <b>{}</b><br>{}",
+            anki_field(&m.original),
+            anki_field(&m.fix),
+            anki_field(&m.explanation)
+        );
         let _ = writeln!(out, "{front}\t{back}\tenmaster mistake {}", m.category);
         count += 1;
     }
@@ -263,7 +272,11 @@ pub mod tests {
             model: "m".into(),
             words: 50,
             mistakes,
-            tips: vec![Tip { phrase: "touch base".into(), meaning: "liên lạc".into(), example: "Let's touch base.".into() }],
+            tips: vec![Tip {
+                phrase: "touch base".into(),
+                meaning: "liên lạc".into(),
+                example: "Let's touch base.".into(),
+            }],
             original: None,
             result: None,
         }
@@ -273,7 +286,10 @@ pub mod tests {
     fn report_compares_periods_and_finds_repeats() {
         let entries = vec![
             entry(10, vec![mistake("the email", "an email", "article")]),
-            entry(2, vec![mistake("informations", "information", "plural"), mistake("the email", "an email", "article")]),
+            entry(
+                2,
+                vec![mistake("informations", "information", "plural"), mistake("the email", "an email", "article")],
+            ),
             entry(1, vec![mistake("The email", "an email", "article")]),
         ];
         let r = report(&entries, 7, Local::now());
